@@ -145,4 +145,46 @@ void inst_rti(C6507 *c);
 /* return subroutine */
 void inst_rts(C6507 *c);
 
+/* subtract with carry */
+void inst_sbc(C6507 *c);
+
+/* subtract with carry (binary-coded decimal addition) */
+void inst_sbc_bdc(C6507 *c);
+
+/* set carry flag */
+void inst_sec(C6507 *c);
+
+/* set decimal flag */
+void inst_sed(C6507 *c);
+
+/* set interrupt disable */
+void inst_sei(C6507 *c);
+
+/* store accumulator */
+void inst_sta(C6507 *c);
+
+/* store x register */
+void inst_stx(C6507 *c);
+
+/* store y register */
+void inst_sty(C6507 *c);
+
+/* transfer accumulator to x */
+void inst_tax(C6507 *c);
+
+/* transfer accumulator to y */
+void inst_tay(C6507 *c);
+
+/* transfer sp to x */
+void inst_tsx(C6507 *c);
+
+/* transfer x to accumulator */
+void inst_txa(C6507 *c);
+
+/* transfer x to sp */
+void inst_txs(C6507 *c);
+
+/* transfer y to accumulator */
+void inst_tya(C6507 *c);
+
 #endif

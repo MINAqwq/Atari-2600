@@ -74,11 +74,11 @@ inst_asl(C6507 *c)
 		res = (uint8_t)c->tmp;
 	}
 
-	SET_FLAG(old >> 7, c->regs.p.carry);
+	SET_FLAG(old >> 7, c->regs.p.carry)
 
-	SET_FLAG(!c->regs.a, c->regs.p.zero);
+	SET_FLAG(!c->regs.a, c->regs.p.zero)
 
-	SET_FLAG(res >> 7, c->regs.p.negative);
+	SET_FLAG(res >> 7, c->regs.p.negative)
 }
 
 void
@@ -477,9 +477,160 @@ inst_ror(C6507 *c)
 void
 inst_rti(C6507 *c)
 {
+	c->regs.pc = c->tmp2;
+
+	SET_FLAG(c->tmp >> 0 & 1, c->regs.p.carry)
+	SET_FLAG(c->tmp >> 1 & 1, c->regs.p.zero)
+	SET_FLAG(c->tmp >> 2 & 1, c->regs.p.irq_disable)
+	SET_FLAG(c->tmp >> 3 & 1, c->regs.p.decimal_mode)
+	SET_FLAG(c->tmp >> 6 & 1, c->regs.p.overflow)
+	SET_FLAG(c->tmp >> 7 & 1, c->regs.p.negative)
 }
 
 void
 inst_rts(C6507 *c)
 {
+	c->regs.pc = c->tmp;
+}
+
+void
+inst_sbc(C6507 *c)
+{
+	uint16_t buf;
+
+	buf = c->regs.a - (c->tmp + !c->regs.p.carry);
+
+	SET_FLAG((uint8_t)(buf >> 8), c->regs.p.carry)
+
+	SET_FLAG(!c->regs.a, c->regs.p.zero)
+
+	SET_FLAG((c->regs.a ^ (c->tmp)) & (c->regs.a ^ buf) & 0x80,
+	         c->regs.p.overflow)
+
+	SET_FLAG(buf & 0x80, c->regs.p.negative)
+
+	c->regs.a = (uint8_t)buf;
+}
+
+void
+inst_sbc_bdc(C6507 *c)
+{
+	uint16_t l;
+	uint16_t h;
+
+	l = (c->regs.a & 0xF) - (c->tmp & 0x0F) - c->regs.p.carry;
+	h = (c->regs.a & 0xF0) - (c->tmp & 0xF0);
+
+	if (l & 0x10) {
+		h -= 0x01;
+		l -= 0x06;
+	}
+
+	uint16_t res = l + h;
+
+	SET_FLAG(!(res << 8), c->regs.p.zero)
+
+	SET_FLAG(!(res >> 8), c->regs.p.carry)
+
+	SET_FLAG((c->regs.a ^ res) & (c->regs.a ^ res) & 0x80,
+	         c->regs.p.overflow)
+
+	SET_FLAG(h & 0x80, c->regs.p.negative)
+
+	if (h & 0x100)
+		h -= 0x60;
+
+	c->regs.a = (uint8_t)l | (uint8_t)h;
+}
+
+void
+inst_sec(C6507 *c)
+{
+	SET_FLAG(1, c->regs.p.carry)
+}
+
+void
+inst_sed(C6507 *c)
+{
+	SET_FLAG(1, c->regs.p.decimal_mode)
+}
+
+void
+inst_sei(C6507 *c)
+{
+	SET_FLAG(1, c->regs.p.irq_disable)
+}
+
+void
+inst_sta(C6507 *c)
+{
+	c->tmp2 = c->regs.a;
+}
+
+void
+inst_stx(C6507 *c)
+{
+	c->tmp2 = c->regs.x;
+}
+
+void
+inst_sty(C6507 *c)
+{
+	c->tmp2 = c->regs.y;
+}
+
+void
+inst_tax(C6507 *c)
+{
+	c->regs.x = c->regs.a;
+
+	SET_FLAG(!c->regs.x, c->regs.p.zero)
+
+	SET_FLAG(c->regs.x & 0x80, c->regs.p.negative)
+}
+
+void
+inst_tay(C6507 *c)
+{
+	c->regs.y = c->regs.a;
+
+	SET_FLAG(!c->regs.y, c->regs.p.zero)
+
+	SET_FLAG(c->regs.y & 0x80, c->regs.p.negative)
+}
+
+void
+inst_tsx(C6507 *c)
+{
+	c->regs.x = c->regs.s;
+
+	SET_FLAG(!c->regs.x, c->regs.p.zero)
+
+	SET_FLAG(c->regs.x & 0x80, c->regs.p.negative)
+}
+
+void
+inst_txa(C6507 *c)
+{
+	c->regs.a = c->regs.x;
+
+	SET_FLAG(!c->regs.a, c->regs.p.zero)
+
+	SET_FLAG(c->regs.a & 0x80, c->regs.p.negative)
+}
+
+void
+inst_txs(C6507 *c)
+{
+	c->regs.s = c->regs.x;
+}
+
+void
+inst_tya(C6507 *c)
+{
+	c->regs.a = c->regs.y;
+
+	SET_FLAG(!c->regs.a, c->regs.p.zero)
+
+	SET_FLAG(c->regs.a & 0x80, c->regs.p.negative)
 }
