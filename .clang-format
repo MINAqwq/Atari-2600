@@ -1,0 +1,5 @@
+BasedOnStyle: LLVM
+IndentWidth: 8
+UseTab: ForIndentation
+AlwaysBreakAfterReturnType: AllDefinitions
+BreakBeforeBraces: Linux
