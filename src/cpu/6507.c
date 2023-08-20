@@ -50,7 +50,7 @@ c6507_clock(C6507 *c)
 	if (c->cycle_count == 0) {
 		c->regs.ir = addrmode_immediate(c);
 		debug_log("ir = %02X", c->regs.ir);
-		NEXT_CYCLE(c)
+		NEXT_CYCLE
 		return;
 	}
 
