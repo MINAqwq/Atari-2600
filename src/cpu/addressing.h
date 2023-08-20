@@ -29,6 +29,6 @@ uint8_t addrmode_zero_page(uint8_t i, C6507 *c);
 
 /* returns ((pc + 1) << 8 | pre) !! -> NEEDS A CALL TO ABSOLUT PRE BEFORE
  */
-uint8_t addrmode_absolute(uint8_t pre, C6507 *c);
+uint16_t addrmode_absolute(uint8_t pre, C6507 *c);
 
 #endif

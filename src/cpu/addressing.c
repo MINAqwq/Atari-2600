@@ -16,7 +16,7 @@ addrmode_zero_page(uint8_t addr, C6507 *c)
 	return bus_read(addr, c->bus);
 }
 
-uint8_t
+uint16_t
 addrmode_absolute(uint8_t pre, C6507 *c)
 {
 	uint8_t b;
