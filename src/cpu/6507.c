@@ -14,31 +14,13 @@ c6507_reset(C6507 *c)
 {
 	/* TODO: Refactor with cycle macros */
 
-	/* reset sequence (7 cycles) */
-	// switch (c->cycle_count) {
-	// case 0:
 	c->regs.ir = 0;
-	// return;
-	// case 1:
+
 	c->regs.s = 0xFF;
-	// return;
-	// case 2: /* FALLTHROUG */
-	// case 3: /* FALLTHROUG */
-	// case 4:
+
 	c->regs.s--;
 	c->regs.s--;
 	c->regs.s--;
-	// return;
-	// case 5:
-	// c->regs.pc &= bus_read(0xFFFC, c->bus);
-	// 	return;
-	// case 6:
-	// c->regs.pc |= (bus_read(0xFFFD, c->bus) << 8);
-	// 	return;
-	// default:
-	// TODO: Error
-	// return;
-	// }
 }
 
 void

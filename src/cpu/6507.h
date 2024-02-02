@@ -12,7 +12,7 @@
 #define NDBIT(x, n) size_t x : n
 #define TO_U8(x)    *(uint8_t *)&x
 
-#define SET_FLAG(condition, flag) flag = condition;
+#define SET_FLAG(condition, flag) flag = (condition & 0x1);
 
 #define CYCLE_TIME 1.19
 
@@ -73,7 +73,7 @@ uint8_t c6507_pop(C6507 *c);
 void c6507_read_next_byte(C6507 *c);
 
 /* init */
-static inline void
+static void
 c6507_init(Bus *b, C6507 *c)
 {
 	c->addr_accumulator = 0;

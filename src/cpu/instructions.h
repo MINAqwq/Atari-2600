@@ -138,7 +138,7 @@ void inst_rol(C6507 *c);
 
 /* rotate right */
 void inst_ror(C6507 *c);
-//
+
 /* return interrupt */
 void inst_rti(C6507 *c);
 
