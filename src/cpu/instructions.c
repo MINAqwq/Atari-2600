@@ -14,7 +14,7 @@ inst_adc(C6507 *c)
 	SET_FLAG(!c->regs.a, c->regs.p.zero)
 
 	SET_FLAG(~(c->regs.a ^ (c->tmp)) & (c->regs.a ^ buf) & 0x80,
-	         c->regs.p.overflow)
+		 c->regs.p.overflow)
 
 	SET_FLAG(buf & 0x80, c->regs.p.negative)
 
@@ -40,7 +40,7 @@ inst_adc_bcd(C6507 *c)
 	SET_FLAG(h >> 8, c->regs.p.carry)
 
 	SET_FLAG(~(c->regs.a ^ ((uint8_t)c->tmp)) & (c->regs.a ^ h) & 0x80,
-	         c->regs.p.overflow)
+		 c->regs.p.overflow)
 
 	SET_FLAG(h & 0x80, c->regs.p.negative)
 
@@ -50,7 +50,6 @@ inst_adc_bcd(C6507 *c)
 void
 inst_and(C6507 *c)
 {
-
 	c->regs.a = c->regs.a & c->tmp;
 
 	SET_FLAG(!c->regs.a, c->regs.p.zero)
@@ -314,11 +313,13 @@ inst_jmp(C6507 *c)
 void
 inst_jsr(C6507 *c)
 {
-	/* push (pc - 1) */
-	// c->regs.pc--;
-	// c6507_push((uint8_t)c->regs.pc >> 8, c);
-	// c6507_push((uint8_t)c->regs.pc, c);
+	c->regs.pc--;
 
+	/* push return addr */
+	c6507_push(c->regs.pc >> 8, c);
+	c6507_push(c->regs.pc, c);
+
+	/* jump to given addr */
 	c->regs.pc = c->tmp;
 }
 
@@ -505,7 +506,7 @@ inst_sbc(C6507 *c)
 	SET_FLAG(!c->regs.a, c->regs.p.zero)
 
 	SET_FLAG((c->regs.a ^ (c->tmp)) & (c->regs.a ^ buf) & 0x80,
-	         c->regs.p.overflow)
+		 c->regs.p.overflow)
 
 	SET_FLAG(buf & 0x80, c->regs.p.negative)
 
@@ -533,7 +534,7 @@ inst_sbc_bdc(C6507 *c)
 	SET_FLAG(!(res >> 8), c->regs.p.carry)
 
 	SET_FLAG((c->regs.a ^ res) & (c->regs.a ^ res) & 0x80,
-	         c->regs.p.overflow)
+		 c->regs.p.overflow)
 
 	SET_FLAG(h & 0x80, c->regs.p.negative)
 

@@ -8,9 +8,9 @@
 #include <string.h>
 
 /* macros for cool stuff */
-#define DBIT(x) uint8_t x : 1
+#define DBIT(x)	    uint8_t x : 1
 #define NDBIT(x, n) size_t x : n
-#define TO_U8(x) *(uint8_t *)&x
+#define TO_U8(x)    *(uint8_t *)&x
 
 #define SET_FLAG(condition, flag) flag = condition;
 
@@ -45,11 +45,11 @@ typedef struct {
 /* MOS 6057 Emulation */
 typedef struct {
 	C6507_Register regs;
-	Bus *bus;
-	uint8_t cycle_count;
-	uint8_t addr_accumulator;
-	uint16_t tmp;
-	uint16_t tmp2;
+	Bus	      *bus;
+	uint8_t	       cycle_count;
+	uint8_t	       addr_accumulator;
+	uint16_t       tmp;
+	uint16_t       tmp2;
 } C6507;
 
 /* reset the cpu.
@@ -68,6 +68,9 @@ void c6507_push(uint8_t val, C6507 *c);
 
 /* helper function for pop a byte onto the stack */
 uint8_t c6507_pop(C6507 *c);
+
+/* read the byte at pc, load it in tmp and increment pc */
+void c6507_read_next_byte(C6507 *c);
 
 /* init */
 static inline void

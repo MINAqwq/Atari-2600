@@ -48,7 +48,8 @@ c6507_clock(C6507 *c)
 
 	/* first cycle is always instruction fetching */
 	if (c->cycle_count == 0) {
-		c->regs.ir = addrmode_immediate(c);
+		c->regs.ir = bus_read(c->regs.pc, c->bus);
+		c->regs.pc++;
 		debug_log("ir = %02X", c->regs.ir);
 		NEXT_CYCLE
 		return;
@@ -88,4 +89,11 @@ c6507_pop(C6507 *c)
 	c->regs.s++;
 
 	return tmp;
+}
+
+void
+c6507_read_next_byte(C6507 *c)
+{
+	c->tmp = bus_read(c->regs.pc, c->bus);
+	c->regs.pc++;
 }

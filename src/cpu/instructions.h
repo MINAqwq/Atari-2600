@@ -7,7 +7,7 @@
 
 /* 6507 Instruction */
 typedef struct {
-	char name[7]; /* for disassembly */
+	char	name[7]; /* for disassembly */
 	uint8_t opcode;
 	/* opcode function returns 1 if oops cycle is needed */
 	void (*fptr)(C6507 *c);
