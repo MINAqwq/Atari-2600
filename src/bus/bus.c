@@ -1,6 +1,6 @@
 #include "bus.h"
-#include "memory_map.h"
 #include "../utils/debug.h"
+#include "memory_map.h"
 
 #include <stddef.h>
 #include <stdio.h>

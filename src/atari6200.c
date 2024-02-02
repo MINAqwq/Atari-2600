@@ -3,25 +3,16 @@
 #include "utils/debug.h"
 
 /* fake rom:
- * LDX #00
- * LDY #55
- *
- * LDA #05
- * STA $10
- *
- * loop:
- * STY $11,X
- * INX
- * CPX $10
- * BNE loop
+ * LDA #5
+ * STA $81
+ * ADC $81
  */
-static uint8_t rom[] = {0xA2, 0x00, 0xA0, 0x37, 0xA9, 0x05, 0x06, 0x85,
-                        0x10, 0x94, 0x11, 0xE8, 0xE4, 0x10, 0xD0, 0xF9};
+static uint8_t rom[] = {0xA9, 0x05, 0x85, 0x81, 0x65, 0x81};
 
 int
 main()
 {
-	Bus bus;
+	Bus   bus;
 	C6507 cpu;
 
 	c6507_init(&bus, &cpu);
@@ -34,12 +25,21 @@ main()
 	bus.memory_map.rom = &rom[0];
 
 	c6507_clock(&cpu);
+	c6507_clock(&cpu);
+	c6507_clock(&cpu);
+	c6507_clock(&cpu);
 
+	c6507_clock(&cpu);
+	c6507_clock(&cpu);
+	c6507_clock(&cpu);
+	c6507_clock(&cpu);
+
+	c6507_clock(&cpu);
 	c6507_clock(&cpu);
 	c6507_clock(&cpu);
 	c6507_clock(&cpu);
 
 	debug_print_cpu_status(&cpu);
 
-	return bus_read(0x5, &bus);
+	return 0;
 }

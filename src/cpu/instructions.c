@@ -565,19 +565,19 @@ inst_sei(C6507 *c)
 void
 inst_sta(C6507 *c)
 {
-	c->tmp2 = c->regs.a;
+	bus_write(c->tmp2, c->regs.a, c->bus);
 }
 
 void
 inst_stx(C6507 *c)
 {
-	c->tmp2 = c->regs.x;
+	bus_write(c->tmp2, c->regs.x, c->bus);
 }
 
 void
 inst_sty(C6507 *c)
 {
-	c->tmp2 = c->regs.y;
+	bus_write(c->tmp2, c->regs.y, c->bus);
 }
 
 void

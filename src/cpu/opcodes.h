@@ -19,6 +19,15 @@ void OP_29(C6507 *c);
 /* zp adc */
 void OP_65(C6507 *c);
 
+/* zp sta */
+void OP_85(C6507 *c);
+
+/* zp lda */
+void OP_A5(C6507 *c);
+
+/* immediate lda */
+void OP_A9(C6507 *c);
+
 /* get opcode by its value */
 op_ptr get_opcode(uint8_t op);
 

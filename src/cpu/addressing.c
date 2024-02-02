@@ -11,7 +11,7 @@ addrmode_immediate(C6507 *c)
 	CYCLE_ADD(1, {
 		c->tmp = bus_read(c->regs.pc, c->bus);
 		c->regs.pc++;
-	})
+	} NEXT_CYCLE)
 
 	CYCLE_END
 }
@@ -21,8 +21,9 @@ addrmode_zero_page(C6507 *c)
 {
 	CYCLE_START
 
-	CYCLE_ADD(1, c->tmp2 = bus_read(c->regs.pc, c->bus); c->regs.pc++;);
-	CYCLE_ADD(2, c->tmp = bus_read(c->tmp2, c->bus););
+	CYCLE_ADD(1, c->tmp2 = bus_read(c->regs.pc, c->bus); c->regs.pc++;
+		  NEXT_CYCLE);
+	CYCLE_ADD(2, c->tmp = bus_read(c->tmp2, c->bus); NEXT_CYCLE);
 
 	CYCLE_END
 }
@@ -32,9 +33,10 @@ addrmode_zero_page_offset(C6507 *c, uint8_t offset)
 {
 	CYCLE_START
 
-	CYCLE_ADD(1, c->tmp2 = bus_read(c->regs.pc, c->bus); c->regs.pc++;);
-	CYCLE_ADD(2, c->tmp2 += offset; c->tmp2 &= 0xFF;);
-	CYCLE_ADD(3, c->tmp = bus_read(c->tmp2, c->bus););
+	CYCLE_ADD(1, c->tmp2 = bus_read(c->regs.pc, c->bus); c->regs.pc++;
+		  NEXT_CYCLE);
+	CYCLE_ADD(2, c->tmp2 += offset; c->tmp2 &= 0xFF; NEXT_CYCLE);
+	CYCLE_ADD(3, c->tmp = bus_read(c->tmp2, c->bus); NEXT_CYCLE);
 
 	CYCLE_END
 }

@@ -70,14 +70,63 @@ OP_69(C6507 *c)
 	CYCLE_END
 }
 
+void
+OP_85(C6507 *c)
+{
+	CYCLE_START
+
+	CYCLE_ADD(1, addrmode_zero_page(c);)
+
+	CYCLE_ADD(2, addrmode_zero_page(c);)
+
+	CYCLE_ADD(3, inst_sta(c); RESET_CYCLE)
+
+	CYCLE_END
+}
+
+void
+OP_A5(C6507 *c)
+{
+	CYCLE_START
+
+	CYCLE_ADD(1, addrmode_zero_page(c);)
+
+	CYCLE_ADD(2, addrmode_zero_page(c);)
+
+	CYCLE_ADD(3, inst_lda(c); RESET_CYCLE)
+
+	CYCLE_END
+}
+
+void
+OP_A9(C6507 *c)
+{
+	CYCLE_START
+
+	CYCLE_ADD(1, addrmode_immediate(c);)
+	CYCLE_ADD(2, inst_lda(c); RESET_CYCLE)
+
+	CYCLE_END
+}
+
 op_ptr
 get_opcode(uint8_t op)
 {
-	if (op == 0x29)
+	switch (op) {
+	case 0x06:
+		return &OP_06;
+	case 0x0A:
+		return &OP_0A;
+	case 0x29:
 		return &OP_29;
-
-	if (op == 0x65)
+	case 0x65:
 		return &OP_65;
-
+	case 0x85:
+		return &OP_85;
+	case 0xA5:
+		return &OP_A5;
+	case 0xA9:
+		return &OP_A9;
+	}
 	return NULL;
 }
