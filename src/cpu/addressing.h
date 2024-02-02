@@ -7,28 +7,38 @@
 #define ADDR_ACCUM(inst, c)                                                    \
 	c->addr_accumulator = 1;                                               \
 	inst(c);                                                               \
-	c->addr_accumulator = 0;
+	c->addr_accumulator = 0
 
 /* https://www.nesdev.org/obelisk-6502-guide/addressing.html */
 
-/*
- * Every function is exactly 1 cycle
+/* [1 cycle] takes the byte at pc and loads it into the temp register (pc gets
+ * inrecemted)
  */
+void addrmode_immediate(C6507 *c);
 
-/* returns (pc + 1) */
-uint8_t addrmode_immediate(C6507 *c);
+#define addrmode_relative(c) addrmode_immediate(c);
 
-/* returns [[pc + 1 + i]]*/
-uint8_t addrmode_zero_page(uint8_t i, C6507 *c);
-
-/* returns [pc + 1] interpreted as signed byte */
-#define addrmode_relative(c) (int8_t) addrmode_immediate(c);
-
-/* returns [pc + 1] the low byte for absolute */
-#define addmode_absolut_pre(c) addrmode_immediate(c);
-
-/* returns ((pc + 1) << 8 | pre) !! -> NEEDS A CALL TO ABSOLUT PRE BEFORE
+/* [2 cycles] takes the next byte at pc and uses it to read from the zero page
  */
-uint16_t addrmode_absolute(uint8_t pre, C6507 *c);
+void addrmode_zero_page(C6507 *c);
+
+/* [3 cycles] zero page read with offset to the addr */
+void addrmode_zero_page_offset(C6507 *c, uint8_t offset);
+
+/* [3 Cycles] takes the next two bytes and makes a 16bit address out of them to
+ * read a byte from that address */
+void addrmode_absolute(C6507 *c);
+
+/* [4 Cycles +] absolute with offset */
+void addrmode_absolute_offset(C6507 *c, uint8_t offset, uint8_t force_oops);
+
+/* [ 4 Cycles ] takes a word from an absolute address */
+void addrmode_indirect(C6507 *c);
+
+/* [4 Cycles] */
+void addrmode_indirect_x(C6507 *c);
+
+/* [4 Cycles +] */
+void addrmode_indirect_y(C6507 *c, uint8_t force_oops);
 
 #endif
