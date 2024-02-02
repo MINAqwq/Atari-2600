@@ -1,5 +1,6 @@
 #include "bus.h"
 #include "memory_map.h"
+#include "../utils/debug.h"
 
 #include <stddef.h>
 #include <stdio.h>
@@ -15,6 +16,7 @@ void __attribute__((__noreturn__)) access_violation(unsigned int addr)
 void
 bus_connect_rom(uint8_t *rom, Bus *b)
 {
+	debug_log("ROM: loading from %p", rom);
 	b->memory_map.rom = rom;
 }
 
@@ -22,6 +24,8 @@ void
 bus_write(uint16_t addr, uint8_t val, Bus *b)
 {
 	uint8_t *ptr;
+
+	debug_log("MEM: write #%d to $%04x", val, addr);
 
 	if (addr > MAX_ADDR)
 		access_violation(addr);
@@ -37,6 +41,8 @@ uint8_t
 bus_read(uint16_t addr, Bus *b)
 {
 	const uint8_t *ptr;
+
+	debug_log("MEM: read from %04x", addr);
 
 	if (addr > MAX_ADDR)
 		access_violation(addr);

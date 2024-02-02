@@ -8,7 +8,7 @@ uint8_t testmem[0x2000];
 uint8_t *
 memory_map_get(uint16_t addr, MemoryMap *mm)
 {
-	/* for testing */
+	/* TODO: for testing */
 	return testmem + addr;
 
 	/* TIA Registers */

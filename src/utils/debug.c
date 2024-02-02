@@ -15,14 +15,6 @@ debug_log(const char *format, ...)
 
 	va_end(arglist);
 }
-#else
-void
-debug_log(const char *format, ...)
-{
-	(void)format;
-	/* no debug build == no debug prints */
-}
-#endif
 
 void
 debug_print_cpu_status(const C6507 *c)
@@ -45,3 +37,4 @@ debug_print_cpu_status(const C6507 *c)
 	       c->regs.p.overflow, c->regs.p.negative, c->regs.pc,
 	       c->cycle_count);
 }
+#endif
