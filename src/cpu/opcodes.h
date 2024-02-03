@@ -7,6 +7,9 @@
 
 typedef void (*op_ptr)(C6507 *c);
 
+/* brk */
+void OP_00(C6507 *c);
+
 /* asl zp */
 void OP_06(C6507 *c);
 
