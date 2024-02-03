@@ -25,14 +25,32 @@ void OP_65(C6507 *c);
 /* sta in,x */
 void OP_81(C6507 *c);
 
+/* sty zp */
+void OP_84(C6507 *c);
+
 /* sta zp */
 void OP_85(C6507 *c);
+
+/* stx zp */
+void OP_86(C6507 *c);
+
+/* sty abs */
+void OP_8C(C6507 *c);
 
 /* sta abs */
 void OD_8D(C6507 *c);
 
+/* stx abs */
+void OP_8E(C6507 *c);
+
+/* sty zp,x */
+void OP_94(C6507 *c);
+
 /* sta zp,x */
 void OP_95(C6507 *c);
+
+/* stx zp,y */
+void OP_96(C6507 *c);
 
 /* sta in,y */
 void OP_91(C6507 *c);
