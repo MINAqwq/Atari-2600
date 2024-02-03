@@ -22,8 +22,9 @@ addrmode_zero_page(C6507 *c)
 	CYCLE_START
 
 	CYCLE_ADD(1, c->tmp2 = bus_read(c->regs.pc, c->bus); c->regs.pc++;
-		  NEXT_CYCLE);
-	CYCLE_ADD(2, c->tmp = bus_read(c->tmp2, c->bus); NEXT_CYCLE);
+		  NEXT_CYCLE)
+
+	CYCLE_ADD(2, c->tmp = bus_read(c->tmp2, c->bus); NEXT_CYCLE)
 
 	CYCLE_END
 }
@@ -34,9 +35,11 @@ addrmode_zero_page_offset(C6507 *c, uint8_t offset)
 	CYCLE_START
 
 	CYCLE_ADD(1, c->tmp2 = bus_read(c->regs.pc, c->bus); c->regs.pc++;
-		  NEXT_CYCLE);
-	CYCLE_ADD(2, c->tmp2 += offset; c->tmp2 &= 0xFF; NEXT_CYCLE);
-	CYCLE_ADD(3, c->tmp = bus_read(c->tmp2, c->bus); NEXT_CYCLE);
+		  NEXT_CYCLE)
+
+	CYCLE_ADD(2, c->tmp2 += offset; c->tmp2 &= 0xFF; NEXT_CYCLE)
+
+	CYCLE_ADD(3, c->tmp = bus_read(c->tmp2, c->bus); NEXT_CYCLE)
 
 	CYCLE_END
 }
@@ -47,13 +50,13 @@ addrmode_absolute(C6507 *c)
 	CYCLE_START
 
 	CYCLE_ADD(1, c->tmp2 = bus_read(c->regs.pc, c->bus); c->tmp2 &= 0xFF;
-		  c->regs.pc++; NEXT_CYCLE);
+		  c->regs.pc++; NEXT_CYCLE)
 
 	CYCLE_ADD(2, c->tmp2 = (uint16_t)((bus_read(c->regs.pc, c->bus) << 8) |
 					  c->tmp2);
-		  c->regs.pc++; NEXT_CYCLE);
+		  c->regs.pc++; NEXT_CYCLE)
 
-	CYCLE_ADD(3, c->tmp = bus_read(c->tmp2, c->bus); NEXT_CYCLE);
+	CYCLE_ADD(3, c->tmp = bus_read(c->tmp2, c->bus); NEXT_CYCLE)
 
 	CYCLE_END
 }
@@ -63,20 +66,22 @@ addrmode_absolute_offset(C6507 *c, uint8_t offset, uint8_t force_oops)
 {
 	uint16_t old_page;
 
-	CYCLE_START CYCLE_ADD(1, c->tmp2 = bus_read(c->regs.pc, c->bus);
-			      c->regs.pc++; NEXT_CYCLE);
+	CYCLE_START
+
+	CYCLE_ADD(1, c->tmp2 = bus_read(c->regs.pc, c->bus); c->regs.pc++;
+		  NEXT_CYCLE)
 
 	CYCLE_ADD(2, c->tmp2 = (uint16_t)((bus_read(c->regs.pc, c->bus) << 8) |
 					  c->tmp2);
-		  c->regs.pc++; NEXT_CYCLE);
+		  c->regs.pc++; NEXT_CYCLE)
 
 	CYCLE_ADD(3, old_page = c->tmp2; c->tmp2 += offset;
 		  (force_oops || (page(old_page) != page(c->tmp2)))
 		      ? GOTO_CYCLE(CYCLE_OOPS)
 		      : NEXT_CYCLE;
-		  c->tmp = bus_read(c->tmp2, c->bus););
+		  c->tmp = bus_read(c->tmp2, c->bus);)
 
-	CYCLE_ADD(CYCLE_OOPS, GOTO_CYCLE(4););
+	CYCLE_ADD(CYCLE_OOPS, GOTO_CYCLE(4);)
 
 	CYCLE_END
 }
@@ -88,11 +93,11 @@ addrmode_indirect(C6507 *c)
 
 	/* fetch pointer lo */
 	CYCLE_ADD(1, c->tmp2 = bus_read(c->regs.pc, c->bus); c->regs.pc++;
-		  NEXT_CYCLE);
+		  NEXT_CYCLE)
 
 	/* fetch pointer hi */
 	CYCLE_ADD(2, c->tmp2 |= (uint16_t)((bus_read(c->regs.pc, c->bus) << 8));
-		  c->regs.pc++; NEXT_CYCLE);
+		  c->regs.pc++; NEXT_CYCLE)
 
 	/* fetch value lo */
 	CYCLE_ADD(3, c->tmp = bus_read(c->tmp2, c->bus); NEXT_CYCLE)
@@ -116,11 +121,11 @@ addrmode_indirect_x(C6507 *c)
 	CYCLE_ADD(2, c->tmp2 += c->regs.x; c->tmp2 &= 0xFF; NEXT_CYCLE)
 
 	/* fetch addr lo */
-	CYCLE_ADD(3, c->tmp = bus_read(c->tmp2, c->bus); NEXT_CYCLE);
+	CYCLE_ADD(3, c->tmp = bus_read(c->tmp2, c->bus); NEXT_CYCLE)
 
 	/* fetch addr hi */
 	CYCLE_ADD(4, c->tmp |= (uint16_t)((bus_read(c->tmp2 + 1, c->bus) << 8));
-		  NEXT_CYCLE);
+		  NEXT_CYCLE)
 
 	/* fetch value from address */
 	CYCLE_ADD(5, c->tmp = bus_read(c->tmp, c->bus); NEXT_CYCLE)
@@ -140,11 +145,11 @@ addrmode_indirect_y(C6507 *c, uint8_t force_oops)
 		  NEXT_CYCLE)
 
 	/* fetch addr lo */
-	CYCLE_ADD(2, c->tmp = bus_read(c->tmp2, c->bus); NEXT_CYCLE);
+	CYCLE_ADD(2, c->tmp = bus_read(c->tmp2, c->bus); NEXT_CYCLE)
 
 	/* fetch addr hi */
 	CYCLE_ADD(3, c->tmp |= (uint16_t)((bus_read(c->tmp2 + 1, c->bus) << 8));
-		  NEXT_CYCLE);
+		  NEXT_CYCLE)
 
 	/* add y to address, deref it and and check page cross */
 	CYCLE_ADD(4, old_page = c->tmp; c->tmp += c->regs.y;
