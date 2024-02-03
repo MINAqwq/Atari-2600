@@ -6,6 +6,7 @@
 
 #include <stddef.h>
 #include <stdio.h>
+#include <stdlib.h>
 #include <sys/time.h>
 
 /* https://pagetable.com/?p=410 */
@@ -40,8 +41,10 @@ c6507_clock(C6507 *c)
 	/* get current instruction */
 	op = get_opcode(c->regs.ir);
 	if (!op) {
-		debug_log("op_ptr is null");
-		/* TODO: error and exit */
+		debug_log(
+		    "%02X not implemented! holy jesus wtf are you doing??\n",
+		    c->regs.ir);
+		exit(1);
 		return;
 	}
 
