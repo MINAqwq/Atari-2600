@@ -1,8 +1,19 @@
 #include "opcodes.h"
+#include "../utils/debug.h"
 #include "6507.h"
 #include "addressing.h"
 #include "cycle_macros.h"
 #include "instructions.h"
+
+#include <stdlib.h>
+
+void
+OP_00(C6507 *c)
+{
+	inst_brk(c);
+	debug_print_cpu_status(c);
+	exit(1);
+}
 
 void
 OP_06(C6507 *c)
@@ -299,6 +310,8 @@ op_ptr
 get_opcode(uint8_t op)
 {
 	switch (op) {
+	case 0x00:
+		return &OP_00;
 	case 0x06:
 		return &OP_06;
 	case 0x0A:

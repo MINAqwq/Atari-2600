@@ -157,7 +157,7 @@ inst_bpl(C6507 *c)
 void
 inst_brk(C6507 *c)
 {
-	debug_log("BRK: not implemented yet");
+	debug_log("BRK: logic not implemented yet (sry)");
 }
 
 void
@@ -565,19 +565,19 @@ inst_sei(C6507 *c)
 void
 inst_sta(C6507 *c)
 {
-	bus_write(c->tmp2, c->regs.a, c->bus);
+	bus_write(c->tmp, c->regs.a, c->bus);
 }
 
 void
 inst_stx(C6507 *c)
 {
-	bus_write(c->tmp2, c->regs.x, c->bus);
+	bus_write(c->tmp, c->regs.x, c->bus);
 }
 
 void
 inst_sty(C6507 *c)
 {
-	bus_write(c->tmp2, c->regs.y, c->bus);
+	bus_write(c->tmp, c->regs.y, c->bus);
 }
 
 void
