@@ -75,10 +75,3 @@ c6507_pop(C6507 *c)
 
 	return tmp;
 }
-
-void
-c6507_read_next_byte(C6507 *c)
-{
-	c->tmp = bus_read(c->regs.pc, c->bus);
-	c->regs.pc++;
-}

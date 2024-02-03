@@ -48,8 +48,8 @@ typedef struct {
 	Bus	      *bus;
 	uint8_t	       cycle_count;
 	uint8_t	       addr_accumulator;
-	uint16_t       tmp;
-	uint16_t       tmp2;
+	uint16_t       value;
+	uint16_t       addr;
 } C6507;
 
 /* reset the cpu.
@@ -68,9 +68,6 @@ void c6507_push(uint8_t val, C6507 *c);
 
 /* helper function for pop a byte onto the stack */
 uint8_t c6507_pop(C6507 *c);
-
-/* read the byte at pc, load it in tmp and increment pc */
-void c6507_read_next_byte(C6507 *c);
 
 /* init */
 static void

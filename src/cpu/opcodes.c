@@ -23,7 +23,7 @@ OP_06(C6507 *c)
 	CYCLE_ADDRMODE_ZP
 
 	CYCLE_ADD(3, inst_asl(c); NEXT_CYCLE)
-	CYCLE_ADD(4, bus_write(c->tmp2, c->tmp, c->bus); RESET_CYCLE)
+	CYCLE_ADD(4, bus_write(c->addr, c->value, c->bus); RESET_CYCLE)
 
 	CYCLE_END
 }

@@ -7,13 +7,13 @@ inst_adc(C6507 *c)
 {
 	uint16_t buf;
 
-	buf = c->regs.a + c->tmp + c->regs.p.carry;
+	buf = c->regs.a + c->value + c->regs.p.carry;
 
 	SET_FLAG(buf >> 8, c->regs.p.carry)
 
 	SET_FLAG(!c->regs.a, c->regs.p.zero)
 
-	SET_FLAG(~(c->regs.a ^ (c->tmp)) & (c->regs.a ^ buf) & 0x80,
+	SET_FLAG(~(c->regs.a ^ (c->value)) & (c->regs.a ^ buf) & 0x80,
 		 c->regs.p.overflow)
 
 	SET_FLAG(buf & 0x80, c->regs.p.negative)
@@ -27,8 +27,8 @@ inst_adc_bcd(C6507 *c)
 	uint16_t l;
 	uint16_t h;
 
-	l = (c->regs.a & 0xF) + (c->tmp & 0x0F) + c->regs.p.carry;
-	h = (c->regs.a & 0xF0) + (c->tmp & 0xF0);
+	l = (c->regs.a & 0xF) + (c->value & 0x0F) + c->regs.p.carry;
+	h = (c->regs.a & 0xF0) + (c->value & 0xF0);
 
 	SET_FLAG(!((l + h) & 0xFF), c->regs.p.zero)
 
@@ -39,7 +39,7 @@ inst_adc_bcd(C6507 *c)
 
 	SET_FLAG(h >> 8, c->regs.p.carry)
 
-	SET_FLAG(~(c->regs.a ^ ((uint8_t)c->tmp)) & (c->regs.a ^ h) & 0x80,
+	SET_FLAG(~(c->regs.a ^ ((uint8_t)c->value)) & (c->regs.a ^ h) & 0x80,
 		 c->regs.p.overflow)
 
 	SET_FLAG(h & 0x80, c->regs.p.negative)
@@ -50,7 +50,7 @@ inst_adc_bcd(C6507 *c)
 void
 inst_and(C6507 *c)
 {
-	c->regs.a = c->regs.a & c->tmp;
+	c->regs.a = c->regs.a & c->value;
 
 	SET_FLAG(!c->regs.a, c->regs.p.zero)
 
@@ -68,9 +68,9 @@ inst_asl(C6507 *c)
 		c->regs.a <<= 1;
 		res = c->regs.a;
 	} else {
-		old = (uint8_t)c->tmp;
-		c->tmp <<= 1;
-		res = (uint8_t)c->tmp;
+		old = (uint8_t)c->value;
+		c->value <<= 1;
+		res = (uint8_t)c->value;
 	}
 
 	SET_FLAG(old >> 7, c->regs.p.carry)
@@ -87,7 +87,7 @@ inst_bcc(C6507 *c)
 	if (c->regs.p.carry)
 		return;
 
-	c->regs.pc += (int8_t)(c->tmp);
+	c->regs.pc += (int8_t)(c->value);
 }
 
 void
@@ -97,7 +97,7 @@ inst_bcs(C6507 *c)
 	if (!c->regs.p.carry)
 		return;
 
-	c->regs.pc += (int8_t)(c->tmp);
+	c->regs.pc += (int8_t)(c->value);
 }
 
 void
@@ -107,7 +107,7 @@ inst_beq(C6507 *c)
 	if (!c->regs.p.zero)
 		return;
 
-	c->regs.pc += (int8_t)(c->tmp);
+	c->regs.pc += (int8_t)(c->value);
 }
 
 void
@@ -115,13 +115,13 @@ inst_bit(C6507 *c)
 {
 	uint8_t res;
 
-	res = c->regs.a & (uint8_t)c->tmp;
+	res = c->regs.a & (uint8_t)c->value;
 
 	SET_FLAG(!res, c->regs.p.zero)
 
-	SET_FLAG(((uint8_t)c->tmp) >> 6, c->regs.p.overflow)
+	SET_FLAG(((uint8_t)c->value) >> 6, c->regs.p.overflow)
 
-	SET_FLAG(((uint8_t)c->tmp) >> 7, c->regs.p.negative)
+	SET_FLAG(((uint8_t)c->value) >> 7, c->regs.p.negative)
 }
 
 void
@@ -131,7 +131,7 @@ inst_bmi(C6507 *c)
 	if (!c->regs.p.negative)
 		return;
 
-	c->regs.pc += (int8_t)(c->tmp);
+	c->regs.pc += (int8_t)(c->value);
 }
 
 void
@@ -141,7 +141,7 @@ inst_bne(C6507 *c)
 		return;
 	}
 
-	c->regs.pc += (int8_t)(c->tmp);
+	c->regs.pc += (int8_t)(c->value);
 }
 
 void
@@ -151,7 +151,7 @@ inst_bpl(C6507 *c)
 		return;
 	}
 
-	c->regs.pc += (int8_t)(c->tmp);
+	c->regs.pc += (int8_t)(c->value);
 }
 
 void
@@ -167,7 +167,7 @@ inst_bvc(C6507 *c)
 		return;
 	}
 
-	c->regs.pc += (int8_t)(c->tmp);
+	c->regs.pc += (int8_t)(c->value);
 }
 
 void
@@ -177,7 +177,7 @@ inst_bvs(C6507 *c)
 		return;
 	}
 
-	c->regs.pc += (int8_t)(c->tmp);
+	c->regs.pc += (int8_t)(c->value);
 }
 
 void
@@ -207,41 +207,41 @@ inst_clv(C6507 *c)
 void
 inst_cmp(C6507 *c)
 {
-	SET_FLAG(c->regs.a >= (uint8_t)c->tmp, c->regs.p.carry)
+	SET_FLAG(c->regs.a >= (uint8_t)c->value, c->regs.p.carry)
 
-	SET_FLAG(c->regs.a == (uint8_t)c->tmp, c->regs.p.zero)
+	SET_FLAG(c->regs.a == (uint8_t)c->value, c->regs.p.zero)
 
-	SET_FLAG((c->regs.a - (uint8_t)c->tmp) >> 7, c->regs.p.negative)
+	SET_FLAG((c->regs.a - (uint8_t)c->value) >> 7, c->regs.p.negative)
 }
 
 void
 inst_cpx(C6507 *c)
 {
-	SET_FLAG(c->regs.x >= (uint8_t)c->tmp, c->regs.p.carry)
+	SET_FLAG(c->regs.x >= (uint8_t)c->value, c->regs.p.carry)
 
-	SET_FLAG(c->regs.x == (uint8_t)c->tmp, c->regs.p.zero)
+	SET_FLAG(c->regs.x == (uint8_t)c->value, c->regs.p.zero)
 
-	SET_FLAG((c->regs.x - (uint8_t)c->tmp) >> 7, c->regs.p.negative)
+	SET_FLAG((c->regs.x - (uint8_t)c->value) >> 7, c->regs.p.negative)
 }
 
 void
 inst_cpy(C6507 *c)
 {
-	SET_FLAG(c->regs.y >= (uint8_t)c->tmp, c->regs.p.carry)
+	SET_FLAG(c->regs.y >= (uint8_t)c->value, c->regs.p.carry)
 
-	SET_FLAG(c->regs.y == (uint8_t)c->tmp, c->regs.p.zero)
+	SET_FLAG(c->regs.y == (uint8_t)c->value, c->regs.p.zero)
 
-	SET_FLAG((c->regs.y - (uint8_t)c->tmp) >> 7, c->regs.p.negative)
+	SET_FLAG((c->regs.y - (uint8_t)c->value) >> 7, c->regs.p.negative)
 }
 
 void
 inst_dec(C6507 *c)
 {
-	c->tmp--;
+	c->value--;
 
-	SET_FLAG(!c->tmp, c->regs.p.zero)
+	SET_FLAG(!c->value, c->regs.p.zero)
 
-	SET_FLAG(c->tmp >> 7, c->regs.p.negative)
+	SET_FLAG(c->value >> 7, c->regs.p.negative)
 }
 
 void
@@ -267,7 +267,7 @@ inst_dey(C6507 *c)
 void
 inst_eor(C6507 *c)
 {
-	c->regs.a ^= (uint8_t)c->tmp;
+	c->regs.a ^= (uint8_t)c->value;
 
 	SET_FLAG(!c->regs.a, c->regs.p.zero)
 
@@ -277,11 +277,11 @@ inst_eor(C6507 *c)
 void
 inst_inc(C6507 *c)
 {
-	c->tmp++;
+	c->value++;
 
-	SET_FLAG(!c->tmp, c->regs.p.zero)
+	SET_FLAG(!c->value, c->regs.p.zero)
 
-	SET_FLAG(c->tmp >> 7, c->regs.p.negative)
+	SET_FLAG(c->value >> 7, c->regs.p.negative)
 }
 
 void
@@ -307,7 +307,7 @@ inst_iny(C6507 *c)
 void
 inst_jmp(C6507 *c)
 {
-	c->regs.pc = c->tmp;
+	c->regs.pc = c->value;
 }
 
 void
@@ -320,13 +320,13 @@ inst_jsr(C6507 *c)
 	c6507_push(c->regs.pc, c);
 
 	/* jump to given addr */
-	c->regs.pc = c->tmp;
+	c->regs.pc = c->value;
 }
 
 void
 inst_lda(C6507 *c)
 {
-	c->regs.a = (uint8_t)c->tmp;
+	c->regs.a = (uint8_t)c->value;
 
 	SET_FLAG(!c->regs.a, c->regs.p.zero)
 
@@ -336,7 +336,7 @@ inst_lda(C6507 *c)
 void
 inst_ldx(C6507 *c)
 {
-	c->regs.x = (uint8_t)c->tmp;
+	c->regs.x = (uint8_t)c->value;
 
 	SET_FLAG(!c->regs.x, c->regs.p.zero)
 
@@ -346,7 +346,7 @@ inst_ldx(C6507 *c)
 void
 inst_ldy(C6507 *c)
 {
-	c->regs.y = (uint8_t)c->tmp;
+	c->regs.y = (uint8_t)c->value;
 
 	SET_FLAG(!c->regs.y, c->regs.p.zero)
 
@@ -364,12 +364,12 @@ inst_lsr(C6507 *c)
 		SET_FLAG(!c->regs.a, c->regs.p.zero)
 		return;
 	}
-	SET_FLAG((uint8_t)c->tmp & 1, c->regs.p.carry)
+	SET_FLAG((uint8_t)c->value & 1, c->regs.p.carry)
 
-	c->tmp &= 0xFF;
-	c->tmp >>= 1;
+	c->value &= 0xFF;
+	c->value >>= 1;
 
-	SET_FLAG((uint8_t)c->tmp, c->regs.p.zero)
+	SET_FLAG((uint8_t)c->value, c->regs.p.zero)
 }
 
 void
@@ -382,7 +382,7 @@ inst_nop(C6507 *c)
 void
 inst_ora(C6507 *c)
 {
-	c->regs.a |= c->tmp;
+	c->regs.a |= c->value;
 
 	SET_FLAG(!c->regs.a, c->regs.p.zero)
 
@@ -404,13 +404,13 @@ inst_php(C6507 *c)
 void
 inst_pla(C6507 *c)
 {
-	c->tmp = c6507_pop(c);
+	c->value = c6507_pop(c);
 }
 
 void
 inst_plp(C6507 *c)
 {
-	c->tmp = c6507_pop(c);
+	c->value = c6507_pop(c);
 }
 
 void
@@ -434,14 +434,14 @@ inst_rol(C6507 *c)
 
 	carry_buf = c->regs.p.carry;
 
-	SET_FLAG(c->tmp >> 7, c->regs.p.carry)
+	SET_FLAG(c->value >> 7, c->regs.p.carry)
 
-	c->tmp <<= 1;
-	c->tmp |= carry_buf << 7;
+	c->value <<= 1;
+	c->value |= carry_buf << 7;
 
-	SET_FLAG(!c->tmp, c->regs.p.zero)
+	SET_FLAG(!c->value, c->regs.p.zero)
 
-	SET_FLAG(c->tmp >> 7, c->regs.p.negative)
+	SET_FLAG(c->value >> 7, c->regs.p.negative)
 }
 
 void
@@ -465,33 +465,33 @@ inst_ror(C6507 *c)
 
 	carry_buf = c->regs.p.carry;
 
-	SET_FLAG(c->tmp & 1, c->regs.p.carry)
+	SET_FLAG(c->value & 1, c->regs.p.carry)
 
-	c->tmp >>= 1;
-	c->tmp |= (carry_buf << 7);
+	c->value >>= 1;
+	c->value |= (carry_buf << 7);
 
-	SET_FLAG(!c->tmp, c->regs.p.zero)
+	SET_FLAG(!c->value, c->regs.p.zero)
 
-	SET_FLAG(c->tmp >> 7, c->regs.p.negative)
+	SET_FLAG(c->value >> 7, c->regs.p.negative)
 }
 
 void
 inst_rti(C6507 *c)
 {
-	c->regs.pc = c->tmp2;
+	c->regs.pc = c->addr;
 
-	SET_FLAG(c->tmp >> 0 & 1, c->regs.p.carry)
-	SET_FLAG(c->tmp >> 1 & 1, c->regs.p.zero)
-	SET_FLAG(c->tmp >> 2 & 1, c->regs.p.irq_disable)
-	SET_FLAG(c->tmp >> 3 & 1, c->regs.p.decimal_mode)
-	SET_FLAG(c->tmp >> 6 & 1, c->regs.p.overflow)
-	SET_FLAG(c->tmp >> 7 & 1, c->regs.p.negative)
+	SET_FLAG(c->value >> 0 & 1, c->regs.p.carry)
+	SET_FLAG(c->value >> 1 & 1, c->regs.p.zero)
+	SET_FLAG(c->value >> 2 & 1, c->regs.p.irq_disable)
+	SET_FLAG(c->value >> 3 & 1, c->regs.p.decimal_mode)
+	SET_FLAG(c->value >> 6 & 1, c->regs.p.overflow)
+	SET_FLAG(c->value >> 7 & 1, c->regs.p.negative)
 }
 
 void
 inst_rts(C6507 *c)
 {
-	c->regs.pc = c->tmp;
+	c->regs.pc = c->value;
 }
 
 void
@@ -499,13 +499,13 @@ inst_sbc(C6507 *c)
 {
 	uint16_t buf;
 
-	buf = c->regs.a - (c->tmp + !c->regs.p.carry);
+	buf = c->regs.a - (c->value + !c->regs.p.carry);
 
 	SET_FLAG((uint8_t)(buf >> 8), c->regs.p.carry)
 
 	SET_FLAG(!c->regs.a, c->regs.p.zero)
 
-	SET_FLAG((c->regs.a ^ (c->tmp)) & (c->regs.a ^ buf) & 0x80,
+	SET_FLAG((c->regs.a ^ (c->value)) & (c->regs.a ^ buf) & 0x80,
 		 c->regs.p.overflow)
 
 	SET_FLAG(buf & 0x80, c->regs.p.negative)
@@ -519,8 +519,8 @@ inst_sbc_bdc(C6507 *c)
 	uint16_t l;
 	uint16_t h;
 
-	l = (c->regs.a & 0xF) - (c->tmp & 0x0F) - c->regs.p.carry;
-	h = (c->regs.a & 0xF0) - (c->tmp & 0xF0);
+	l = (c->regs.a & 0xF) - (c->value & 0x0F) - c->regs.p.carry;
+	h = (c->regs.a & 0xF0) - (c->value & 0xF0);
 
 	if (l & 0x10) {
 		h -= 0x01;
@@ -565,19 +565,19 @@ inst_sei(C6507 *c)
 void
 inst_sta(C6507 *c)
 {
-	bus_write(c->tmp, c->regs.a, c->bus);
+	bus_write(c->addr, c->regs.a, c->bus);
 }
 
 void
 inst_stx(C6507 *c)
 {
-	bus_write(c->tmp, c->regs.x, c->bus);
+	bus_write(c->addr, c->regs.x, c->bus);
 }
 
 void
 inst_sty(C6507 *c)
 {
-	bus_write(c->tmp, c->regs.y, c->bus);
+	bus_write(c->addr, c->regs.y, c->bus);
 }
 
 void
