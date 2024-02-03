@@ -2,7 +2,6 @@
 #define ATARI_CPU_ADDRESSING_H
 
 #include "6507.h"
-#include <bits/stdint-uintn.h>
 
 #define ADDR_ACCUM(inst, c)                                                    \
 	c->addr_accumulator = 1;                                               \
@@ -12,7 +11,7 @@
 /* https://www.nesdev.org/obelisk-6502-guide/addressing.html */
 
 /* [1 cycle] takes the byte at pc and loads it into the temp register (pc gets
- * inrecemted)
+ * incremented)
  */
 void addrmode_immediate(C6507 *c);
 
@@ -35,10 +34,11 @@ void addrmode_absolute_offset(C6507 *c, uint8_t offset, uint8_t force_oops);
 /* [ 4 Cycles ] takes a word from an absolute address */
 void addrmode_indirect(C6507 *c);
 
-/* [4 Cycles] */
+/* [5 Cycles] fetch a 16bit address from (zp + x) and read whats at the fetched
+ * address */
 void addrmode_indirect_x(C6507 *c);
 
-/* [4 Cycles +] */
+/* [4 Cycles +] fetch a 16bit address from zp and read from (address + y) */
 void addrmode_indirect_y(C6507 *c, uint8_t force_oops);
 
 #endif
