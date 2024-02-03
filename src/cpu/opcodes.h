@@ -34,6 +34,9 @@ void OP_85(C6507 *c);
 /* stx zp */
 void OP_86(C6507 *c);
 
+/* txa */
+void OP_8A(C6507 *c);
+
 /* sty abs */
 void OP_8C(C6507 *c);
 
@@ -42,6 +45,9 @@ void OD_8D(C6507 *c);
 
 /* stx abs */
 void OP_8E(C6507 *c);
+
+/* sta in,y */
+void OP_91(C6507 *c);
 
 /* sty zp,x */
 void OP_94(C6507 *c);
@@ -52,14 +58,17 @@ void OP_95(C6507 *c);
 /* stx zp,y */
 void OP_96(C6507 *c);
 
-/* sta in,y */
-void OP_91(C6507 *c);
-
-/* sta abs,x */
-void OP_9D(C6507 *c);
+/* tya */
+void OP_98(C6507 *c);
 
 /* sta abs,y */
 void OP_99(C6507 *c);
+
+/* txs */
+void OP_9A(C6507 *c);
+
+/* sta abs,x */
+void OP_9D(C6507 *c);
 
 /* ldy imc */
 void OP_A0(C6507 *c);
@@ -79,8 +88,14 @@ void OP_A5(C6507 *c);
 /* ldx zp */
 void OP_A6(C6507 *c);
 
+/* tay */
+void OP_A8(C6507 *c);
+
 /* lda im */
 void OP_A9(C6507 *c);
+
+/* tax */
+void OP_AA(C6507 *c);
 
 /* ldy abs */
 void OP_AC(C6507 *c);
@@ -105,6 +120,9 @@ void OP_B6(C6507 *c);
 
 /* lda abs,y */
 void OP_B9(C6507 *c);
+
+/* tsx */
+void OP_BA(C6507 *c);
 
 /* ldy abs,x */
 void OP_BC(C6507 *c);

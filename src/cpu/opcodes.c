@@ -127,6 +127,18 @@ OP_86(C6507 *c)
 }
 
 void
+OP_8A(C6507 *c)
+{
+	CYCLE_START
+
+	CYCLE_ADD(1, NEXT_CYCLE)
+
+	CYCLE_ADD(2, inst_txa(c); RESET_CYCLE)
+
+	CYCLE_END
+}
+
+void
 OP_8C(C6507 *c)
 {
 	CYCLE_START
@@ -158,6 +170,18 @@ OP_8E(C6507 *c)
 	CYCLE_ADDRMODE_ABS
 
 	CYCLE_ADD(4, inst_stx(c); RESET_CYCLE)
+
+	CYCLE_END
+}
+
+void
+OP_91(C6507 *c)
+{
+	CYCLE_START
+
+	CYCLE_ADDRMODE_INY(1)
+
+	CYCLE_ADD(5, inst_sta(c); RESET_CYCLE)
 
 	CYCLE_END
 }
@@ -199,13 +223,13 @@ OP_96(C6507 *c)
 }
 
 void
-OP_91(C6507 *c)
+OP_98(C6507 *c)
 {
 	CYCLE_START
 
-	CYCLE_ADDRMODE_INY(1)
+	CYCLE_ADD(1, NEXT_CYCLE)
 
-	CYCLE_ADD(5, inst_sta(c); RESET_CYCLE)
+	CYCLE_ADD(2, inst_tya(c); RESET_CYCLE)
 
 	CYCLE_END
 }
@@ -235,6 +259,18 @@ OP_99(C6507 *c)
 }
 
 void
+OP_9A(C6507 *c)
+{
+	CYCLE_START
+
+	CYCLE_ADD(1, NEXT_CYCLE)
+
+	CYCLE_ADD(2, inst_txs(c); RESET_CYCLE)
+
+	CYCLE_END
+}
+
+void
 OP_A0(C6507 *c)
 {
 	CYCLE_START
@@ -254,18 +290,6 @@ OP_A1(C6507 *c)
 	CYCLE_ADDRMODE_INX
 
 	CYCLE_ADD(6, inst_lda(c); RESET_CYCLE)
-
-	CYCLE_END
-}
-
-void
-OP_A6(C6507 *c)
-{
-	CYCLE_START
-
-	CYCLE_ADDRMODE_ZP
-
-	CYCLE_ADD(3, inst_ldx(c); RESET_CYCLE)
 
 	CYCLE_END
 }
@@ -307,6 +331,30 @@ OP_A5(C6507 *c)
 }
 
 void
+OP_A6(C6507 *c)
+{
+	CYCLE_START
+
+	CYCLE_ADDRMODE_ZP
+
+	CYCLE_ADD(3, inst_ldx(c); RESET_CYCLE)
+
+	CYCLE_END
+}
+
+void
+OP_A8(C6507 *c)
+{
+	CYCLE_START
+
+	CYCLE_ADD(1, NEXT_CYCLE)
+
+	CYCLE_ADD(2, inst_tay(c); RESET_CYCLE)
+
+	CYCLE_END
+}
+
+void
 OP_A9(C6507 *c)
 {
 	CYCLE_START
@@ -314,6 +362,19 @@ OP_A9(C6507 *c)
 	CYCLE_ADDRMODE_IM
 
 	CYCLE_ADD(2, inst_lda(c); RESET_CYCLE)
+
+	CYCLE_END
+}
+
+void
+OP_AA(C6507 *c)
+{
+	CYCLE_START
+
+	/* TODO: is implied eating a cycle that does "nothing"? lol */
+	CYCLE_ADD(1, NEXT_CYCLE)
+
+	CYCLE_ADD(2, inst_tax(c); RESET_CYCLE)
 
 	CYCLE_END
 }
@@ -415,6 +476,18 @@ OP_B9(C6507 *c)
 }
 
 void
+OP_BA(C6507 *c)
+{
+	CYCLE_START
+
+	CYCLE_ADD(1, NEXT_CYCLE)
+
+	CYCLE_ADD(2, inst_tsx(c); RESET_CYCLE)
+
+	CYCLE_END
+}
+
+void
 OP_BC(C6507 *c)
 {
 	CYCLE_START
@@ -449,7 +522,6 @@ OP_BE(C6507 *c)
 
 	CYCLE_END
 }
-
 op_ptr
 get_opcode(uint8_t op)
 {
@@ -472,22 +544,28 @@ get_opcode(uint8_t op)
 		return &OP_85;
 	case 0x86:
 		return &OP_86;
+	case 0x8A:
+		return &OP_8A;
 	case 0x8C:
 		return &OP_8C;
 	case 0x8E:
 		return &OP_8E;
+	case 0x91:
+		return &OP_91;
 	case 0x94:
 		return &OP_94;
 	case 0x95:
 		return &OP_95;
 	case 0x96:
 		return &OP_96;
-	case 0x91:
-		return &OP_91;
-	case 0x9D:
-		return &OP_9D;
+	case 0x98:
+		return &OP_98;
 	case 0x99:
 		return &OP_99;
+	case 0x9A:
+		return &OP_9A;
+	case 0x9D:
+		return &OP_9D;
 	case 0xA0:
 		return &OP_A0;
 	case 0xA1:
@@ -500,8 +578,12 @@ get_opcode(uint8_t op)
 		return &OP_A5;
 	case 0xA6:
 		return &OP_A6;
+	case 0xA8:
+		return &OP_A8;
 	case 0xA9:
 		return &OP_A9;
+	case 0xAA:
+		return &OP_AA;
 	case 0xAC:
 		return &OP_AC;
 	case 0xAD:
@@ -518,6 +600,8 @@ get_opcode(uint8_t op)
 		return &OP_B6;
 	case 0xB9:
 		return &OP_B9;
+	case 0xBA:
+		return &OP_BA;
 	case 0xBC:
 		return &OP_BC;
 	case 0xBD:
