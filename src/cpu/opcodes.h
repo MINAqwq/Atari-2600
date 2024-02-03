@@ -22,8 +22,26 @@ void OP_29(C6507 *c);
 /* adc zp */
 void OP_65(C6507 *c);
 
+/* sta in,x */
+void OP_81(C6507 *c);
+
 /* sta zp */
 void OP_85(C6507 *c);
+
+/* sta abs */
+void OD_8D(C6507 *c);
+
+/* sta zp,x */
+void OP_95(C6507 *c);
+
+/* sta in,y */
+void OP_91(C6507 *c);
+
+/* sta abs,x */
+void OP_9D(C6507 *c);
+
+/* sta abs,y */
+void OP_99(C6507 *c);
 
 /* ldy imc */
 void OP_A0(C6507 *c);
