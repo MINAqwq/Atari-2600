@@ -9,8 +9,7 @@ OP_06(C6507 *c)
 {
 	CYCLE_START
 
-	CYCLE_ADD(1, addrmode_zero_page(c);)
-	CYCLE_ADD(2, addrmode_zero_page(c);)
+	CYCLE_ADDRMODE_ZP
 
 	CYCLE_ADD(3, inst_asl(c); NEXT_CYCLE)
 	CYCLE_ADD(4, bus_write(c->tmp2, c->tmp, c->bus); RESET_CYCLE)
@@ -23,7 +22,7 @@ OP_0A(C6507 *c)
 {
 	CYCLE_START
 
-	CYCLE_ADD(1, addrmode_immediate(c);)
+	CYCLE_ADDRMODE_IM
 
 	CYCLE_ADD(2, ADDR_ACCUM(inst_asl, c); RESET_CYCLE)
 
@@ -35,7 +34,7 @@ OP_29(C6507 *c)
 {
 	CYCLE_START
 
-	CYCLE_ADD(1, addrmode_immediate(c);)
+	CYCLE_ADDRMODE_IM
 
 	CYCLE_ADD(2, inst_and(c); RESET_CYCLE)
 
@@ -47,9 +46,7 @@ OP_65(C6507 *c)
 {
 	CYCLE_START
 
-	CYCLE_ADD(1, addrmode_zero_page(c);)
-
-	CYCLE_ADD(2, addrmode_zero_page(c);)
+	CYCLE_ADDRMODE_ZP
 
 	CYCLE_ADD(3, c->regs.p.decimal_mode ? inst_adc_bcd(c) : inst_adc(c);
 		  RESET_CYCLE)
@@ -62,7 +59,7 @@ OP_69(C6507 *c)
 {
 	CYCLE_START
 
-	CYCLE_ADD(1, addrmode_immediate(c);)
+	CYCLE_ADDRMODE_IM
 
 	CYCLE_ADD(2, c->regs.p.decimal_mode ? inst_adc_bcd(c) : inst_adc(c);
 		  RESET_CYCLE)
@@ -75,11 +72,21 @@ OP_85(C6507 *c)
 {
 	CYCLE_START
 
-	CYCLE_ADD(1, addrmode_zero_page(c);)
-
-	CYCLE_ADD(2, addrmode_zero_page(c);)
+	CYCLE_ADDRMODE_ZP
 
 	CYCLE_ADD(3, inst_sta(c); RESET_CYCLE)
+
+	CYCLE_END
+}
+
+void
+OP_A1(C6507 *c)
+{
+	CYCLE_START
+
+	CYCLE_ADDRMODE_INX
+
+	CYCLE_ADD(6, inst_lda(c);)
 
 	CYCLE_END
 }
@@ -89,9 +96,7 @@ OP_A5(C6507 *c)
 {
 	CYCLE_START
 
-	CYCLE_ADD(1, addrmode_zero_page(c);)
-
-	CYCLE_ADD(2, addrmode_zero_page(c);)
+	CYCLE_ADDRMODE_ZP
 
 	CYCLE_ADD(3, inst_lda(c); RESET_CYCLE)
 
@@ -103,8 +108,69 @@ OP_A9(C6507 *c)
 {
 	CYCLE_START
 
-	CYCLE_ADD(1, addrmode_immediate(c);)
+	CYCLE_ADDRMODE_IM
+
 	CYCLE_ADD(2, inst_lda(c); RESET_CYCLE)
+
+	CYCLE_END
+}
+
+void
+OP_AD(C6507 *c)
+{
+	CYCLE_START
+
+	CYCLE_ADDRMODE_ABS
+
+	CYCLE_ADD(4, inst_lda(c); RESET_CYCLE)
+
+	CYCLE_END
+}
+
+void
+OP_B1(C6507 *c)
+{
+	CYCLE_START
+
+	CYCLE_ADDRMODE_INY(0)
+
+	CYCLE_ADD(5, inst_lda(c); RESET_CYCLE)
+
+	CYCLE_END
+}
+
+void
+OP_B5(C6507 *c)
+{
+	CYCLE_START
+
+	CYCLE_ADDRMODE_ZPX
+
+	CYCLE_ADD(4, inst_lda(c); RESET_CYCLE)
+
+	CYCLE_END
+}
+
+void
+OP_B9(C6507 *c)
+{
+	CYCLE_START
+
+	CYCLE_ADDRMODE_ABY(0)
+
+	CYCLE_ADD(4, inst_lda(c); RESET_CYCLE)
+
+	CYCLE_END
+}
+
+void
+OP_BD(C6507 *c)
+{
+	CYCLE_START
+
+	CYCLE_ADDRMODE_ABX(0)
+
+	CYCLE_ADD(4, inst_lda(c); RESET_CYCLE)
 
 	CYCLE_END
 }
@@ -123,10 +189,22 @@ get_opcode(uint8_t op)
 		return &OP_65;
 	case 0x85:
 		return &OP_85;
+	case 0xA1:
+		return &OP_A1;
 	case 0xA5:
 		return &OP_A5;
 	case 0xA9:
 		return &OP_A9;
+	case 0xAD:
+		return &OP_AD;
+	case 0xB1:
+		return &OP_B1;
+	case 0xB5:
+		return &OP_B5;
+	case 0xB9:
+		return &OP_B9;
+	case 0xBD:
+		return &OP_BD;
 	}
 	return NULL;
 }
