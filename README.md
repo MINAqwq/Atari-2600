@@ -40,7 +40,7 @@ Update README.md (this file)
 - If implemented a new Opcode
 ```sh
 # first delete the function from the file and then run this (yeah, its kinda shitty ik)
-python3 scripts/gen_opcodes.py >> scr/cpu/opcodes.c
+python3 scripts/gen_opcodes.py >> src/cpu/opcodes.c
 
 # then use the command below to replace the implemented opcode percentage in the README
 sed -i -e "s/.\{2\}\..\{2\}\%\ \(.*\)/$(python3 scripts/gen_opcodes.py -p)/" README.md
