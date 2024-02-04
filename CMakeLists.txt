@@ -12,7 +12,6 @@ endif ()
 
 add_executable(atari2600
     src/bus/bus.c
-    src/bus/memory_map.c
     src/cpu/6507.c
     src/cpu/addressing.c
     src/cpu/instructions.c
