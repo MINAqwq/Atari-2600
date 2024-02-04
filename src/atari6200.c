@@ -35,7 +35,7 @@ main()
 	bus.memory_map.rom = &rom[0];
 
 	while (1) {
-		c6507_clock(&cpu);
+		c6507_exec(&cpu);
 	}
 
 	return 0;
