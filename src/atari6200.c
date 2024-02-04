@@ -3,19 +3,20 @@
 #include "utils/debug.h"
 
 /* fake rom:
- * LDA #0x90
- * STA $80
- * LDA #00
- * STA $81
+ * ; Load 0x0090 to address 0x80
+ * LDA #0x90	; load 0x90 into A
+ * STA $80	; store A (0x90) to address 0x80
+ * LDA #00	; load 0x00 into A
+ * STA $81	; store A (0x00) to address 0x01
  *
- * LDA #0xFE
- * LDY #02
- * STA ($80),y
- * LDX $92
+ * ; Load 0xFE from address 0x92 after we stored it there
+ * LDA #0xFE	; load 0xFE into A
+ * LDY #02	; load 0x02 into Y
+ * STA ($80),y	; read address 0x90 from addr 0x80 and add Y (0x02) to it
+ * LDX $92	; read from address 0x92
  */
-static uint8_t rom[] = {0xA9, 0x90, 0x85, 0x80, 0xA9, 0x00, 0x85, 0x81, 0xA9,
-			0xFE, 0xA0, 0x02, 0x91, 0x80, 0xA6, 0x92, 0x00};
-
+static uint8_t rom[] = {0xA9, 0x90, 0x85, 0x80, 0xA9, 0x00, 0x85, 0x81,
+			0xA9, 0xFE, 0xA0, 0x02, 0x91, 0x80, 0xA6, 0x92};
 int
 main()
 {
@@ -28,11 +29,8 @@ main()
 	cpu.regs.pc = 0x1000;
 	cpu.cycle_count = 0;
 
-	bus.memory_map.riot = NULL;
-	bus.memory_map.tia = NULL;
-
 	/* load fake rom */
-	bus.memory_map.rom = &rom[0];
+	memcpy(bus.memory + 0x1000, rom, sizeof(rom));
 
 	while (1) {
 		c6507_exec(&cpu);
