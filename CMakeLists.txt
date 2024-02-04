@@ -17,5 +17,6 @@ add_executable(atari2600
     src/cpu/instructions.c
     src/cpu/opcodes.c
     src/utils/debug.c
-    src/atari6200.c
+    src/atari2600.c
 )
+
