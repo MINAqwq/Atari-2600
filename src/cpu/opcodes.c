@@ -29,6 +29,20 @@ OP_06(C6507 *c)
 }
 
 void
+OP_08(C6507 *c)
+{
+	CYCLE_START
+
+	CYCLE_ADD(1, NEXT_CYCLE)
+
+	CYCLE_ADD(2, inst_php(c); NEXT_CYCLE)
+
+	CYCLE_ADD(3, c->regs.s--; RESET_CYCLE)
+
+	CYCLE_END
+}
+
+void
 OP_0A(C6507 *c)
 {
 	CYCLE_START
@@ -36,6 +50,22 @@ OP_0A(C6507 *c)
 	CYCLE_ADDRMODE_IM
 
 	CYCLE_ADD(2, ADDR_ACCUM(inst_asl, c); RESET_CYCLE)
+
+	CYCLE_END
+}
+
+void
+OP_28(C6507 *c)
+{
+	CYCLE_START
+
+	CYCLE_ADD(1, NEXT_CYCLE)
+
+	CYCLE_ADD(2, c->regs.s++; NEXT_CYCLE)
+
+	CYCLE_ADD(3, inst_plp(c); NEXT_CYCLE)
+
+	CYCLE_ADD(4, TO_U8(c->regs.p) = c->value; RESET_CYCLE)
 
 	CYCLE_END
 }
@@ -53,6 +83,20 @@ OP_29(C6507 *c)
 }
 
 void
+OP_48(C6507 *c)
+{
+	CYCLE_START
+
+	CYCLE_ADD(1, NEXT_CYCLE)
+
+	CYCLE_ADD(2, inst_pha(c); NEXT_CYCLE)
+
+	CYCLE_ADD(3, c->regs.s--; RESET_CYCLE)
+
+	CYCLE_END
+}
+
+void
 OP_65(C6507 *c)
 {
 	CYCLE_START
@@ -61,6 +105,22 @@ OP_65(C6507 *c)
 
 	CYCLE_ADD(3, c->regs.p.decimal_mode ? inst_adc_bcd(c) : inst_adc(c);
 		  RESET_CYCLE)
+
+	CYCLE_END
+}
+
+void
+OP_68(C6507 *c)
+{
+	CYCLE_START
+
+	CYCLE_ADD(1, NEXT_CYCLE)
+
+	CYCLE_ADD(4, c->regs.s++; NEXT_CYCLE)
+
+	CYCLE_ADD(2, inst_pla(c); NEXT_CYCLE)
+
+	CYCLE_ADD(3, c->regs.a = c->value; RESET_CYCLE)
 
 	CYCLE_END
 }
@@ -522,6 +582,7 @@ OP_BE(C6507 *c)
 
 	CYCLE_END
 }
+
 op_ptr
 get_opcode(uint8_t op)
 {
@@ -530,12 +591,20 @@ get_opcode(uint8_t op)
 		return &OP_00;
 	case 0x06:
 		return &OP_06;
+	case 0x08:
+		return &OP_08;
 	case 0x0A:
 		return &OP_0A;
+	case 0x28:
+		return &OP_28;
 	case 0x29:
 		return &OP_29;
+	case 0x48:
+		return &OP_48;
 	case 0x65:
 		return &OP_65;
+	case 0x68:
+		return &OP_68;
 	case 0x81:
 		return &OP_81;
 	case 0x84:

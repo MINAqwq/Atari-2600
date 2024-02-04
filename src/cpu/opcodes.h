@@ -13,14 +13,26 @@ void OP_00(C6507 *c);
 /* asl zp */
 void OP_06(C6507 *c);
 
+/* php */
+void OP_08(C6507 *c);
+
 /* asl a */
 void OP_0A(C6507 *c);
+
+/* plp */
+void OP_28(C6507 *c);
 
 /* and im */
 void OP_29(C6507 *c);
 
+/* pha */
+void OP_48(C6507 *c);
+
 /* adc zp */
 void OP_65(C6507 *c);
+
+/* pla */
+void OP_68(C6507 *c);
 
 /* sta in,x */
 void OP_81(C6507 *c);

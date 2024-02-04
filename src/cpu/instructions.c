@@ -405,6 +405,9 @@ void
 inst_pla(C6507 *c)
 {
 	c->value = c6507_pop(c);
+
+	SET_FLAG(!c->value, c->regs.p.zero)
+	SET_FLAG(c->value >> 7, c->regs.p.negative)
 }
 
 void
