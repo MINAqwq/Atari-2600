@@ -19,11 +19,32 @@ void OP_08(C6507 *c);
 /* asl a */
 void OP_0A(C6507 *c);
 
+/* and in,x */
+void OP_21(C6507 *c);
+
+/* and zp */
+void OP_25(C6507 *c);
+
 /* plp */
 void OP_28(C6507 *c);
 
 /* and im */
 void OP_29(C6507 *c);
+
+/* and abs */
+void OP_2D(C6507 *c);
+
+/* and iny */
+void OP_31(C6507 *c);
+
+/* and zp,x */
+void OP_35(C6507 *c);
+
+/* and abs,y */
+void OP_39(C6507 *c);
+
+/* and abs,x */
+void OP_3D(C6507 *c);
 
 /* pha */
 void OP_48(C6507 *c);

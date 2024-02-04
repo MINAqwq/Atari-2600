@@ -47,9 +47,33 @@ OP_0A(C6507 *c)
 {
 	CYCLE_START
 
-	CYCLE_ADDRMODE_IM
+	CYCLE_ADD(1, NEXT_CYCLE)
 
 	CYCLE_ADD(2, ADDR_ACCUM(inst_asl, c); RESET_CYCLE)
+
+	CYCLE_END
+}
+
+void
+OP_21(C6507 *c)
+{
+	CYCLE_START
+
+	CYCLE_ADDRMODE_INX
+
+	CYCLE_ADD(6, inst_and(c); RESET_CYCLE)
+
+	CYCLE_END
+}
+
+void
+OP_25(C6507 *c)
+{
+	CYCLE_START
+
+	CYCLE_ADDRMODE_ZP
+
+	CYCLE_ADD(3, inst_and(c); RESET_CYCLE)
 
 	CYCLE_END
 }
@@ -78,6 +102,66 @@ OP_29(C6507 *c)
 	CYCLE_ADDRMODE_IM
 
 	CYCLE_ADD(2, inst_and(c); RESET_CYCLE)
+
+	CYCLE_END
+}
+
+void
+OP_2D(C6507 *c)
+{
+	CYCLE_START
+
+	CYCLE_ADDRMODE_ABS
+
+	CYCLE_ADD(4, inst_and(c); RESET_CYCLE)
+
+	CYCLE_END
+}
+
+void
+OP_31(C6507 *c)
+{
+	CYCLE_START
+
+	CYCLE_ADDRMODE_INY(0)
+
+	CYCLE_ADD(5, inst_and(c); RESET_CYCLE)
+
+	CYCLE_END
+}
+
+void
+OP_35(C6507 *c)
+{
+	CYCLE_START
+
+	CYCLE_ADDRMODE_ZPX
+
+	CYCLE_ADD(4, inst_and(c); RESET_CYCLE)
+
+	CYCLE_END
+}
+
+void
+OP_39(C6507 *c)
+{
+	CYCLE_START
+
+	CYCLE_ADDRMODE_ABY(0)
+
+	CYCLE_ADD(4, inst_and(c); RESET_CYCLE)
+
+	CYCLE_END
+}
+
+void
+OP_3D(C6507 *c)
+{
+	CYCLE_START
+
+	CYCLE_ADDRMODE_ABX(0)
+
+	CYCLE_ADD(4, inst_and(c); RESET_CYCLE)
 
 	CYCLE_END
 }
@@ -595,10 +679,24 @@ get_opcode(uint8_t op)
 		return &OP_08;
 	case 0x0A:
 		return &OP_0A;
+	case 0x21:
+		return &OP_21;
+	case 0x25:
+		return &OP_25;
 	case 0x28:
 		return &OP_28;
 	case 0x29:
 		return &OP_29;
+	case 0x2D:
+		return &OP_2D;
+	case 0x31:
+		return &OP_31;
+	case 0x35:
+		return &OP_35;
+	case 0x39:
+		return &OP_39;
+	case 0x3D:
+		return &OP_3D;
 	case 0x48:
 		return &OP_48;
 	case 0x65:

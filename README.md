@@ -24,7 +24,7 @@ You won't notice any of this, because a release build won't print debug stuff.
 - Exits on BRK and dumps all registers
 
 #### Opcodes
-16.80% (including illegal opcodes)
+20.31% (including illegal opcodes)
 ```sh
 # prints out the text above
 python3 scripts/gen_opcodes.py -p
