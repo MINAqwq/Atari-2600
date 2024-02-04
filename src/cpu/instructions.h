@@ -58,10 +58,10 @@ void inst_bvs(C6507 *c);
 /* clear carry */
 void inst_clc(C6507 *c);
 
-/* clear dcecimal */
+/* clear decimal */
 void inst_cld(C6507 *c);
 
-/* clear interrutps disabled */
+/* clear interrupts disabled */
 void inst_cli(C6507 *c);
 
 /* clear overflow */
