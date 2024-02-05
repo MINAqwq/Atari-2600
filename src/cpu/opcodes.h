@@ -46,8 +46,32 @@ void OP_39(C6507 *c);
 /* and abs,x */
 void OP_3D(C6507 *c);
 
+/* eor in,x */
+void OP_41(C6507 *c);
+
+/* eor zp */
+void OP_45(C6507 *c);
+
 /* pha */
 void OP_48(C6507 *c);
+
+/* eor im */
+void OP_49(C6507 *c);
+
+/* eor abs */
+void OP_4D(C6507 *c);
+
+/* eor in,y */
+void OP_51(C6507 *c);
+
+/* eor zp,x */
+void OP_55(C6507 *c);
+
+/* eor abs,y */
+void OP_59(C6507 *c);
+
+/* eor abs,x */
+void OP_5D(C6507 *c);
 
 /* adc zp */
 void OP_65(C6507 *c);

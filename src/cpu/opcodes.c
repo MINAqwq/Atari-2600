@@ -167,6 +167,30 @@ OP_3D(C6507 *c)
 }
 
 void
+OP_41(C6507 *c)
+{
+	CYCLE_START
+
+	CYCLE_ADDRMODE_INX
+
+	CYCLE_ADD(6, inst_eor(c); RESET_CYCLE)
+
+	CYCLE_END
+}
+
+void
+OP_45(C6507 *c)
+{
+	CYCLE_START
+
+	CYCLE_ADDRMODE_ZP
+
+	CYCLE_ADD(3, inst_eor(c); RESET_CYCLE)
+
+	CYCLE_END
+}
+
+void
 OP_48(C6507 *c)
 {
 	CYCLE_START
@@ -176,6 +200,78 @@ OP_48(C6507 *c)
 	CYCLE_ADD(2, inst_pha(c); NEXT_CYCLE)
 
 	CYCLE_ADD(3, c->regs.s--; RESET_CYCLE)
+
+	CYCLE_END
+}
+
+void
+OP_49(C6507 *c)
+{
+	CYCLE_START
+
+	CYCLE_ADDRMODE_IM
+
+	CYCLE_ADD(2, inst_eor(c); RESET_CYCLE)
+
+	CYCLE_END
+}
+
+void
+OP_4D(C6507 *c)
+{
+	CYCLE_START
+
+	CYCLE_ADDRMODE_ABS
+
+	CYCLE_ADD(4, inst_eor(c); RESET_CYCLE)
+
+	CYCLE_END
+}
+
+void
+OP_51(C6507 *c)
+{
+	CYCLE_START
+
+	CYCLE_ADDRMODE_INY(0)
+
+	CYCLE_ADD(5, inst_eor(c); RESET_CYCLE)
+
+	CYCLE_END
+}
+
+void
+OP_55(C6507 *c)
+{
+	CYCLE_START
+
+	CYCLE_ADDRMODE_ZPX
+
+	CYCLE_ADD(4, inst_eor(c); RESET_CYCLE)
+
+	CYCLE_END
+}
+
+void
+OP_59(C6507 *c)
+{
+	CYCLE_START
+
+	CYCLE_ADDRMODE_ABY(0)
+
+	CYCLE_ADD(4, inst_eor(c); RESET_CYCLE)
+
+	CYCLE_END
+}
+
+void
+OP_5D(C6507 *c)
+{
+	CYCLE_START
+
+	CYCLE_ADDRMODE_ABX(0)
+
+	CYCLE_ADD(4, inst_eor(c); RESET_CYCLE)
 
 	CYCLE_END
 }
@@ -697,8 +793,24 @@ get_opcode(uint8_t op)
 		return &OP_39;
 	case 0x3D:
 		return &OP_3D;
+	case 0x41:
+		return &OP_41;
+	case 0x45:
+		return &OP_45;
 	case 0x48:
 		return &OP_48;
+	case 0x49:
+		return &OP_49;
+	case 0x4D:
+		return &OP_4D;
+	case 0x51:
+		return &OP_51;
+	case 0x55:
+		return &OP_55;
+	case 0x59:
+		return &OP_59;
+	case 0x5D:
+		return &OP_5D;
 	case 0x65:
 		return &OP_65;
 	case 0x68:
