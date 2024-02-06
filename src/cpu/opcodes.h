@@ -10,14 +10,38 @@ typedef void (*op_ptr)(C6507 *c);
 /* brk */
 void OP_00(C6507 *c);
 
+/* in,x */
+void OP_01(C6507 *c);
+
+/* ora zp */
+void OP_05(C6507 *c);
+
 /* asl zp */
 void OP_06(C6507 *c);
 
 /* php */
 void OP_08(C6507 *c);
 
+/* ora im */
+void OP_09(C6507 *c);
+
 /* asl a */
 void OP_0A(C6507 *c);
+
+/* ora abs */
+void OP_0D(C6507 *c);
+
+/* ora in,y*/
+void OP_11(C6507 *c);
+
+/* ora zp,x */
+void OP_15(C6507 *c);
+
+/* ora abs,y */
+void OP_19(C6507 *c);
+
+/* ora abs,x */
+void OP_1D(C6507 *c);
 
 /* and in,x */
 void OP_21(C6507 *c);

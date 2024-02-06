@@ -16,6 +16,30 @@ OP_00(C6507 *c)
 }
 
 void
+OP_01(C6507 *c)
+{
+	CYCLE_START
+
+	CYCLE_ADDRMODE_INX
+
+	CYCLE_ADD(6, inst_ora(c); RESET_CYCLE)
+
+	CYCLE_END
+}
+
+void
+OP_05(C6507 *c)
+{
+	CYCLE_START
+
+	CYCLE_ADDRMODE_ZP
+
+	CYCLE_ADD(3, inst_ora(c); RESET_CYCLE)
+
+	CYCLE_END
+}
+
+void
 OP_06(C6507 *c)
 {
 	CYCLE_START
@@ -43,6 +67,18 @@ OP_08(C6507 *c)
 }
 
 void
+OP_09(C6507 *c)
+{
+	CYCLE_START
+
+	CYCLE_ADDRMODE_IM
+
+	CYCLE_ADD(2, inst_ora(c); RESET_CYCLE)
+
+	CYCLE_END
+}
+
+void
 OP_0A(C6507 *c)
 {
 	CYCLE_START
@@ -50,6 +86,66 @@ OP_0A(C6507 *c)
 	CYCLE_ADD(1, NEXT_CYCLE)
 
 	CYCLE_ADD(2, ADDR_ACCUM(inst_asl, c); RESET_CYCLE)
+
+	CYCLE_END
+}
+
+void
+OP_0D(C6507 *c)
+{
+	CYCLE_START
+
+	CYCLE_ADDRMODE_ABS
+
+	CYCLE_ADD(4, inst_ora(c); RESET_CYCLE)
+
+	CYCLE_END
+}
+
+void
+OP_11(C6507 *c)
+{
+	CYCLE_START
+
+	CYCLE_ADDRMODE_INY(0)
+
+	CYCLE_ADD(5, inst_ora(c); RESET_CYCLE)
+
+	CYCLE_END
+}
+
+void
+OP_15(C6507 *c)
+{
+	CYCLE_START
+
+	CYCLE_ADDRMODE_ZPX
+
+	CYCLE_ADD(4, inst_ora(c); RESET_CYCLE)
+
+	CYCLE_END
+}
+
+void
+OP_19(C6507 *c)
+{
+	CYCLE_START
+
+	CYCLE_ADDRMODE_ABY(0)
+
+	CYCLE_ADD(4, inst_ora(c); RESET_CYCLE)
+
+	CYCLE_END
+}
+
+void
+OP_1D(C6507 *c)
+{
+	CYCLE_START
+
+	CYCLE_ADDRMODE_ABX(0)
+
+	CYCLE_ADD(4, inst_ora(c); RESET_CYCLE)
 
 	CYCLE_END
 }
@@ -611,7 +707,6 @@ OP_AA(C6507 *c)
 {
 	CYCLE_START
 
-	/* TODO: is implied eating a cycle that does "nothing"? lol */
 	CYCLE_ADD(1, NEXT_CYCLE)
 
 	CYCLE_ADD(2, inst_tax(c); RESET_CYCLE)
@@ -769,12 +864,28 @@ get_opcode(uint8_t op)
 	switch (op) {
 	case 0x00:
 		return &OP_00;
+	case 0x01:
+		return &OP_01;
+	case 0x05:
+		return &OP_05;
 	case 0x06:
 		return &OP_06;
 	case 0x08:
 		return &OP_08;
+	case 0x09:
+		return &OP_09;
 	case 0x0A:
 		return &OP_0A;
+	case 0x0D:
+		return &OP_0D;
+	case 0x11:
+		return &OP_11;
+	case 0x15:
+		return &OP_15;
+	case 0x19:
+		return &OP_19;
+	case 0x1D:
+		return &OP_1D;
 	case 0x21:
 		return &OP_21;
 	case 0x25:
