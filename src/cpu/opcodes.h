@@ -46,6 +46,9 @@ void OP_1D(C6507 *c);
 /* and in,x */
 void OP_21(C6507 *c);
 
+/* bit zp */
+void OP_24(C6507 *c);
+
 /* and zp */
 void OP_25(C6507 *c);
 
@@ -54,6 +57,9 @@ void OP_28(C6507 *c);
 
 /* and im */
 void OP_29(C6507 *c);
+
+/* bit abs */
+void OP_2C(C6507 *c);
 
 /* and abs */
 void OP_2D(C6507 *c);

@@ -163,6 +163,18 @@ OP_21(C6507 *c)
 }
 
 void
+OP_24(C6507 *c)
+{
+	CYCLE_START
+
+	CYCLE_ADDRMODE_ZP
+
+	CYCLE_ADD(3, inst_bit(c); RESET_CYCLE)
+
+	CYCLE_END
+}
+
+void
 OP_25(C6507 *c)
 {
 	CYCLE_START
@@ -198,6 +210,18 @@ OP_29(C6507 *c)
 	CYCLE_ADDRMODE_IM
 
 	CYCLE_ADD(2, inst_and(c); RESET_CYCLE)
+
+	CYCLE_END
+}
+
+void
+OP_2C(C6507 *c)
+{
+	CYCLE_START
+
+	CYCLE_ADDRMODE_ABS
+
+	CYCLE_ADD(4, inst_bit(c); RESET_CYCLE)
 
 	CYCLE_END
 }
@@ -888,12 +912,16 @@ get_opcode(uint8_t op)
 		return &OP_1D;
 	case 0x21:
 		return &OP_21;
+	case 0x24:
+		return &OP_24;
 	case 0x25:
 		return &OP_25;
 	case 0x28:
 		return &OP_28;
 	case 0x29:
 		return &OP_29;
+	case 0x2C:
+		return &OP_2C;
 	case 0x2D:
 		return &OP_2D;
 	case 0x31:
