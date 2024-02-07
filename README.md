@@ -17,8 +17,13 @@ When you run the emulator it will load a hard coded program that ends per BRK. \
 You won't notice any of this, because a release build won't print debug stuff.
 
 ## Dev
+### Debug build
+```sh
+cmake -S . -B ./build -DDEBUG=ON
+```
+
 ### Status
-- Able to emulate all load, transfer and store operations
+- Able to emulate all load, transfer, store, stack and logical operations
 - Uses a array as memory to cover $0 - $FFFF without mirror locations
 - Loads a fake rom and executes that
 - Exits on BRK and dumps all registers
@@ -32,6 +37,12 @@ python3 scripts/gen_opcodes.py -p
 
 ### What to do?
 While implementing all opcodes has highest priority i think making the memory map is also very important for the accuracy, but at the moment I'm not very sure how important ALL mirror locations are, so i will do the opcodes first.
+Opcodes im working on atm:
+- ADC
+- SBC
+- CMP
+- CPX
+- CPY
 
 ### Before a commit
 Update README.md (this file)
