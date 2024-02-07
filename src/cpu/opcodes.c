@@ -960,6 +960,110 @@ OP_BE(C6507 *c)
 	CYCLE_END
 }
 
+void
+OP_E1(C6507 *c)
+{
+	CYCLE_START
+
+	CYCLE_ADDRMODE_INX
+
+	CYCLE_ADD(6, c->regs.p.decimal_mode ? inst_sbc_bcd(c) : inst_sbc(c);
+		  RESET_CYCLE)
+
+	CYCLE_END
+}
+
+void
+OP_E5(C6507 *c)
+{
+	CYCLE_START
+
+	CYCLE_ADDRMODE_ZP
+
+	CYCLE_ADD(3, c->regs.p.decimal_mode ? inst_sbc_bcd(c) : inst_sbc(c);
+		  RESET_CYCLE)
+
+	CYCLE_END
+}
+
+void
+OP_E9(C6507 *c)
+{
+	CYCLE_START
+
+	CYCLE_ADDRMODE_IM
+
+	CYCLE_ADD(2, c->regs.p.decimal_mode ? inst_sbc_bcd(c) : inst_sbc(c);
+		  RESET_CYCLE)
+
+	CYCLE_END
+}
+
+void
+OP_ED(C6507 *c)
+{
+	CYCLE_START
+
+	CYCLE_ADDRMODE_ABS
+
+	CYCLE_ADD(4, c->regs.p.decimal_mode ? inst_sbc_bcd(c) : inst_sbc(c);
+		  RESET_CYCLE)
+
+	CYCLE_END
+}
+
+void
+OP_F1(C6507 *c)
+{
+	CYCLE_START
+
+	CYCLE_ADDRMODE_INY(0)
+
+	CYCLE_ADD(5, c->regs.p.decimal_mode ? inst_sbc_bcd(c) : inst_sbc(c);
+		  RESET_CYCLE)
+
+	CYCLE_END
+}
+
+void
+OP_F5(C6507 *c)
+{
+	CYCLE_START
+
+	CYCLE_ADDRMODE_ZPX
+
+	CYCLE_ADD(4, c->regs.p.decimal_mode ? inst_sbc_bcd(c) : inst_sbc(c);
+		  RESET_CYCLE)
+
+	CYCLE_END
+}
+
+void
+OP_F9(C6507 *c)
+{
+	CYCLE_START
+
+	CYCLE_ADDRMODE_ABY(0)
+
+	CYCLE_ADD(4, c->regs.p.decimal_mode ? inst_sbc_bcd(c) : inst_sbc(c);
+		  RESET_CYCLE)
+
+	CYCLE_END
+}
+
+void
+OP_FD(C6507 *c)
+{
+	CYCLE_START
+
+	CYCLE_ADDRMODE_ABX(0)
+
+	CYCLE_ADD(4, c->regs.p.decimal_mode ? inst_sbc_bcd(c) : inst_sbc(c);
+		  RESET_CYCLE)
+
+	CYCLE_END
+}
+
 op_ptr
 get_opcode(uint8_t op)
 {
@@ -1118,6 +1222,22 @@ get_opcode(uint8_t op)
 		return &OP_BD;
 	case 0xBE:
 		return &OP_BE;
+	case 0xE1:
+		return &OP_E1;
+	case 0xE5:
+		return &OP_E5;
+	case 0xE9:
+		return &OP_E9;
+	case 0xED:
+		return &OP_ED;
+	case 0xF1:
+		return &OP_F1;
+	case 0xF5:
+		return &OP_F5;
+	case 0xF9:
+		return &OP_F9;
+	case 0xFD:
+		return &OP_FD;
 	}
 	return NULL;
 }

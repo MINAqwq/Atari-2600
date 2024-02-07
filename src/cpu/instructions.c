@@ -517,7 +517,7 @@ inst_sbc(C6507 *c)
 }
 
 void
-inst_sbc_bdc(C6507 *c)
+inst_sbc_bcd(C6507 *c)
 {
 	uint16_t l;
 	uint16_t h;

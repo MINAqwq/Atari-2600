@@ -29,7 +29,7 @@ cmake -S . -B ./build -DDEBUG=ON
 - Exits on BRK and dumps all registers
 
 #### Opcodes
-30.08% (including illegal opcodes)
+33.20% (including illegal opcodes)
 ```sh
 # prints out the text above
 python3 scripts/gen_opcodes.py -p

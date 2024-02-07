@@ -241,6 +241,30 @@ void OP_BD(C6507 *c);
 /* ldx abs,y */
 void OP_BE(C6507 *c);
 
+/* sbc in,x */
+void OP_E1(C6507 *c);
+
+/* sbc zp */
+void OP_E5(C6507 *c);
+
+/* sbc im */
+void OP_E9(C6507 *c);
+
+/* sbc abs */
+void OP_ED(C6507 *c);
+
+/* sbc in,y */
+void OP_F1(C6507 *c);
+
+/* sbc zp,x */
+void OP_F5(C6507 *c);
+
+/* sbc abs,y */
+void OP_F9(C6507 *c);
+
+/* sbc abs,x */
+void OP_FD(C6507 *c);
+
 /* get opcode by its value */
 op_ptr get_opcode(uint8_t op);
 

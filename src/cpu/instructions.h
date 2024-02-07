@@ -141,7 +141,7 @@ void inst_rts(C6507 *c);
 void inst_sbc(C6507 *c);
 
 /* subtract with carry (binary-coded decimal addition) */
-void inst_sbc_bdc(C6507 *c);
+void inst_sbc_bcd(C6507 *c);
 
 /* set carry flag */
 void inst_sec(C6507 *c);
