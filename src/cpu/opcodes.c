@@ -397,6 +397,19 @@ OP_5D(C6507 *c)
 }
 
 void
+OP_61(C6507 *c)
+{
+	CYCLE_START
+
+	CYCLE_ADDRMODE_INX
+
+	CYCLE_ADD(6, c->regs.p.decimal_mode ? inst_adc_bcd(c) : inst_adc(c);
+		  RESET_CYCLE)
+
+	CYCLE_END
+}
+
+void
 OP_65(C6507 *c)
 {
 	CYCLE_START
@@ -433,6 +446,71 @@ OP_69(C6507 *c)
 	CYCLE_ADDRMODE_IM
 
 	CYCLE_ADD(2, c->regs.p.decimal_mode ? inst_adc_bcd(c) : inst_adc(c);
+		  RESET_CYCLE)
+
+	CYCLE_END
+}
+
+void
+OP_6D(C6507 *c)
+{
+	CYCLE_START
+
+	CYCLE_ADDRMODE_ABS
+
+	CYCLE_ADD(4, c->regs.p.decimal_mode ? inst_adc_bcd(c) : inst_adc(c);
+		  RESET_CYCLE)
+
+	CYCLE_END
+}
+
+void
+OP_71(C6507 *c)
+{
+	CYCLE_START
+
+	CYCLE_ADDRMODE_INY(0)
+
+	CYCLE_ADD(5, c->regs.p.decimal_mode ? inst_adc_bcd(c) : inst_adc(c);
+		  RESET_CYCLE)
+
+	CYCLE_END
+}
+
+void
+OP_75(C6507 *c)
+{
+	CYCLE_START
+
+	CYCLE_ADDRMODE_ZPX
+
+	CYCLE_ADD(4, c->regs.p.decimal_mode ? inst_adc_bcd(c) : inst_adc(c);
+		  RESET_CYCLE)
+
+	CYCLE_END
+}
+
+void
+OP_79(C6507 *c)
+{
+	CYCLE_START
+
+	CYCLE_ADDRMODE_ABY(0)
+
+	CYCLE_ADD(4, c->regs.p.decimal_mode ? inst_adc_bcd(c) : inst_adc(c);
+		  RESET_CYCLE)
+
+	CYCLE_END
+}
+
+void
+OP_7D(C6507 *c)
+{
+	CYCLE_START
+
+	CYCLE_ADDRMODE_ABX(0)
+
+	CYCLE_ADD(4, c->regs.p.decimal_mode ? inst_adc_bcd(c) : inst_adc(c);
 		  RESET_CYCLE)
 
 	CYCLE_END
@@ -950,10 +1028,24 @@ get_opcode(uint8_t op)
 		return &OP_59;
 	case 0x5D:
 		return &OP_5D;
+	case 0x61:
+		return &OP_61;
 	case 0x65:
 		return &OP_65;
 	case 0x68:
 		return &OP_68;
+	case 0x69:
+		return &OP_69;
+	case 0x6D:
+		return &OP_6D;
+	case 0x71:
+		return &OP_71;
+	case 0x75:
+		return &OP_75;
+	case 0x79:
+		return &OP_79;
+	case 0x7D:
+		return &OP_7D;
 	case 0x81:
 		return &OP_81;
 	case 0x84:
