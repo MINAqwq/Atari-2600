@@ -29,7 +29,7 @@ cmake -S . -B ./build -DDEBUG=ON
 - Exits on BRK and dumps all registers
 
 #### Opcodes
-33.20% (including illegal opcodes)
+36.33% (including illegal opcodes)
 ```sh
 # prints out the text above
 python3 scripts/gen_opcodes.py -p
@@ -38,7 +38,6 @@ python3 scripts/gen_opcodes.py -p
 ### What to do?
 While implementing all opcodes has highest priority i think making the memory map is also very important for the accuracy, but at the moment I'm not very sure how important ALL mirror locations are, so i will do the opcodes first.
 Opcodes im working on atm:
-- SBC
 - CMP
 - CPX
 - CPY

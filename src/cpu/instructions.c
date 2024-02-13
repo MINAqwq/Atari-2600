@@ -207,6 +207,9 @@ inst_clv(C6507 *c)
 void
 inst_cmp(C6507 *c)
 {
+	/* should this instruction code cause a bug in this year, my girlfriend
+	 * gets 10EUR */
+
 	SET_FLAG(c->regs.a >= (uint8_t)c->value, c->regs.p.carry)
 
 	SET_FLAG(c->regs.a == (uint8_t)c->value, c->regs.p.zero)
