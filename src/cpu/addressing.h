@@ -28,17 +28,17 @@ void addrmode_zero_page_offset(C6507 *c, uint8_t offset);
  * read a byte from that address */
 void addrmode_absolute(C6507 *c);
 
-/* [4 Cycles +] absolute with offset */
+/* [3+ Cycles] absolute with offset */
 void addrmode_absolute_offset(C6507 *c, uint8_t offset, uint8_t force_oops);
 
-/* [ 4 Cycles ] takes a word from an absolute address */
+/* [3 Cycles] takes a word from an absolute address */
 void addrmode_indirect(C6507 *c);
 
 /* [5 Cycles] fetch a 16bit address from (zp + x) and read whats at the fetched
  * address */
 void addrmode_indirect_x(C6507 *c);
 
-/* [4 Cycles +] fetch a 16bit address from zp and read from (address + y) */
+/* [4+ Cycles] fetch a 16bit address from zp and read from (address + y) */
 void addrmode_indirect_y(C6507 *c, uint8_t force_oops);
 
 #endif
