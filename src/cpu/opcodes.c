@@ -565,6 +565,17 @@ OP_86(C6507 *c)
 }
 
 void
+OP_88(C6507 *c)
+{
+	CYCLE_START
+
+	CYCLE_ADD(1, NEXT_CYCLE)
+	CYCLE_ADD(2, inst_dey(c); RESET_CYCLE)
+
+	CYCLE_END
+}
+
+void
 OP_8A(C6507 *c)
 {
 	CYCLE_START
@@ -1009,6 +1020,31 @@ OP_C5(C6507 *c)
 }
 
 void
+OP_C6(C6507 *c)
+{
+	CYCLE_START
+
+	CYCLE_ADDRMODE_ZP
+
+	CYCLE_ADD(3, inst_dec(c); NEXT_CYCLE)
+	CYCLE_ADD(4, NEXT_CYCLE) /* TODO: why does dec take 2 more cycle? */
+	CYCLE_ADD(5, bus_write(c->addr, c->value, c->bus); RESET_CYCLE)
+
+	CYCLE_END
+}
+
+void
+OP_C8(C6507 *c)
+{
+	CYCLE_START
+
+	CYCLE_ADD(1, NEXT_CYCLE)
+	CYCLE_ADD(2, inst_iny(c); RESET_CYCLE)
+
+	CYCLE_END
+}
+
+void
 OP_C9(C6507 *c)
 {
 	CYCLE_START
@@ -1016,6 +1052,17 @@ OP_C9(C6507 *c)
 	CYCLE_ADDRMODE_IM
 
 	CYCLE_ADD(2, inst_cmp(c); RESET_CYCLE)
+
+	CYCLE_END
+}
+
+void
+OP_CA(C6507 *c)
+{
+	CYCLE_START
+
+	CYCLE_ADD(1, NEXT_CYCLE)
+	CYCLE_ADD(2, inst_dex(c); RESET_CYCLE)
 
 	CYCLE_END
 }
@@ -1045,6 +1092,20 @@ OP_CD(C6507 *c)
 }
 
 void
+OP_CE(C6507 *c)
+{
+	CYCLE_START
+
+	CYCLE_ADDRMODE_ABS
+
+	CYCLE_ADD(4, inst_dec(c); NEXT_CYCLE)
+	CYCLE_ADD(5, NEXT_CYCLE) /* TODO: why does dec take 2 more cycle? */
+	CYCLE_ADD(6, bus_write(c->addr, c->value, c->bus); RESET_CYCLE)
+
+	CYCLE_END
+}
+
+void
 OP_D1(C6507 *c)
 {
 	CYCLE_START
@@ -1069,6 +1130,20 @@ OP_D5(C6507 *c)
 }
 
 void
+OP_D6(C6507 *c)
+{
+	CYCLE_START
+
+	CYCLE_ADDRMODE_ZPX
+
+	CYCLE_ADD(4, inst_dec(c); NEXT_CYCLE)
+	CYCLE_ADD(5, NEXT_CYCLE) /* TODO: why does dec take 2 more cycle? */
+	CYCLE_ADD(6, bus_write(c->addr, c->value, c->bus); RESET_CYCLE)
+
+	CYCLE_END
+}
+
+void
 OP_D9(C6507 *c)
 {
 	CYCLE_START
@@ -1088,6 +1163,20 @@ OP_DD(C6507 *c)
 	CYCLE_ADDRMODE_ABX(0)
 
 	CYCLE_ADD(4, inst_cmp(c); RESET_CYCLE)
+
+	CYCLE_END
+}
+
+void
+OP_DE(C6507 *c)
+{
+	CYCLE_START
+
+	CYCLE_ADDRMODE_ABX(1)
+
+	CYCLE_ADD(4, inst_dec(c); NEXT_CYCLE)
+	CYCLE_ADD(5, NEXT_CYCLE) /* TODO: why does dec take 2 more cycle? */
+	CYCLE_ADD(6, bus_write(c->addr, c->value, c->bus); RESET_CYCLE)
 
 	CYCLE_END
 }
@@ -1143,6 +1232,31 @@ OP_E5(C6507 *c)
 }
 
 void
+OP_E6(C6507 *c)
+{
+	CYCLE_START
+
+	CYCLE_ADDRMODE_ZP
+
+	CYCLE_ADD(3, inst_inc(c); NEXT_CYCLE)
+	CYCLE_ADD(4, NEXT_CYCLE) /* TODO: why does inc take 2 more cycle? */
+	CYCLE_ADD(5, bus_write(c->addr, c->value, c->bus); RESET_CYCLE)
+
+	CYCLE_END
+}
+
+void
+OP_E8(C6507 *c)
+{
+	CYCLE_START
+
+	CYCLE_ADD(1, NEXT_CYCLE)
+	CYCLE_ADD(2, inst_inx(c); RESET_CYCLE)
+
+	CYCLE_END
+}
+
+void
 OP_E9(C6507 *c)
 {
 	CYCLE_START
@@ -1181,6 +1295,20 @@ OP_ED(C6507 *c)
 }
 
 void
+OP_EE(C6507 *c)
+{
+	CYCLE_START
+
+	CYCLE_ADDRMODE_ABS
+
+	CYCLE_ADD(4, inst_inc(c); NEXT_CYCLE)
+	CYCLE_ADD(5, NEXT_CYCLE) /* TODO: why does inc take 2 more cycle? */
+	CYCLE_ADD(6, bus_write(c->addr, c->value, c->bus); RESET_CYCLE)
+
+	CYCLE_END
+}
+
+void
 OP_F1(C6507 *c)
 {
 	CYCLE_START
@@ -1207,6 +1335,20 @@ OP_F5(C6507 *c)
 }
 
 void
+OP_F6(C6507 *c)
+{
+	CYCLE_START
+
+	CYCLE_ADDRMODE_ZPX
+
+	CYCLE_ADD(4, inst_inc(c); NEXT_CYCLE)
+	CYCLE_ADD(5, NEXT_CYCLE) /* TODO: why does inc take 2 more cycle? */
+	CYCLE_ADD(6, bus_write(c->addr, c->value, c->bus); RESET_CYCLE)
+
+	CYCLE_END
+}
+
+void
 OP_F9(C6507 *c)
 {
 	CYCLE_START
@@ -1228,6 +1370,20 @@ OP_FD(C6507 *c)
 
 	CYCLE_ADD(4, c->regs.p.decimal_mode ? inst_sbc_bcd(c) : inst_sbc(c);
 		  RESET_CYCLE)
+
+	CYCLE_END
+}
+
+void
+OP_FE(C6507 *c)
+{
+	CYCLE_START
+
+	CYCLE_ADDRMODE_ABX(1)
+
+	CYCLE_ADD(4, inst_inc(c); NEXT_CYCLE)
+	CYCLE_ADD(5, NEXT_CYCLE) /* TODO: why does inc take 2 more cycle? */
+	CYCLE_ADD(6, bus_write(c->addr, c->value, c->bus); RESET_CYCLE)
 
 	CYCLE_END
 }
@@ -1326,6 +1482,8 @@ get_opcode(uint8_t op)
 		return &OP_85;
 	case 0x86:
 		return &OP_86;
+	case 0x88:
+		return &OP_88;
 	case 0x8A:
 		return &OP_8A;
 	case 0x8C:
@@ -1398,20 +1556,32 @@ get_opcode(uint8_t op)
 		return &OP_C4;
 	case 0xC5:
 		return &OP_C5;
+	case 0xC6:
+		return &OP_C6;
+	case 0xC8:
+		return &OP_C8;
 	case 0xC9:
 		return &OP_C9;
+	case 0xCA:
+		return &OP_CA;
 	case 0xCC:
 		return &OP_CC;
 	case 0xCD:
 		return &OP_CD;
+	case 0xCE:
+		return &OP_CE;
 	case 0xD1:
 		return &OP_D1;
 	case 0xD5:
 		return &OP_D5;
+	case 0xD6:
+		return &OP_D6;
 	case 0xD9:
 		return &OP_D9;
 	case 0xDD:
 		return &OP_DD;
+	case 0xDE:
+		return &OP_DE;
 	case 0xE0:
 		return &OP_E0;
 	case 0xE1:
@@ -1420,20 +1590,30 @@ get_opcode(uint8_t op)
 		return &OP_E4;
 	case 0xE5:
 		return &OP_E5;
+	case 0xE6:
+		return &OP_E6;
+	case 0xE8:
+		return &OP_E8;
 	case 0xE9:
 		return &OP_E9;
 	case 0xEC:
 		return &OP_EC;
 	case 0xED:
 		return &OP_ED;
+	case 0xEE:
+		return &OP_EE;
 	case 0xF1:
 		return &OP_F1;
 	case 0xF5:
 		return &OP_F5;
+	case 0xF6:
+		return &OP_F6;
 	case 0xF9:
 		return &OP_F9;
 	case 0xFD:
 		return &OP_FD;
+	case 0xFE:
+		return &OP_FE;
 	}
 	return NULL;
 }

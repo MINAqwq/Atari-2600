@@ -23,13 +23,13 @@ cmake -S . -B ./build -DDEBUG=ON
 ```
 
 ### Status
-- Able to emulate all load, transfer, store, stack, logical and arithmetic operations
+- Able to emulate all load, transfer, store, stack, logical, arithmetic, increment and decrement operations
 - Uses a array as memory to cover $0 - $FFFF without mirror locations
 - Loads a fake rom and executes that
 - Exits on BRK and dumps all registers
 
 #### Opcodes
-38.67% (including illegal opcodes)
+43.36% (including illegal opcodes)
 ```sh
 # prints out the text above
 python3 scripts/gen_opcodes.py -p
@@ -38,12 +38,7 @@ python3 scripts/gen_opcodes.py -p
 ### What to do?
 While implementing all opcodes has highest priority i think making the memory map is also very important for the accuracy, but at the moment I'm not very sure how important ALL mirror locations are, so i will do the opcodes first.
 Opcodes im working on atm:
-- INC
-- INX
-- INY
-- DEC
-- DEX
-- DEY
+- ASL
 
 ### Before a commit
 Update README.md (this file)

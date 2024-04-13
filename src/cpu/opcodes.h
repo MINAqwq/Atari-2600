@@ -142,6 +142,9 @@ void OP_85(C6507 *c);
 /* stx zp */
 void OP_86(C6507 *c);
 
+/* dey im */
+void OP_88(C6507 *c);
+
 /* txa */
 void OP_8A(C6507 *c);
 
@@ -253,8 +256,17 @@ void OP_C4(C6507 *c);
 /* cmp zp */
 void OP_C5(C6507 *c);
 
+/* dec zp */
+void OP_C6(C6507 *c);
+
+/* iny im */
+void OP_C8(C6507 *c);
+
 /* cmp im */
 void OP_C9(C6507 *c);
+
+/* dex im */
+void OP_CA(C6507 *c);
 
 /* cpy abs */
 void OP_CC(C6507 *c);
@@ -262,17 +274,26 @@ void OP_CC(C6507 *c);
 /* cmp abs */
 void OP_CD(C6507 *c);
 
+/* dec abs */
+void OP_CE(C6507 *c);
+
 /* cmp in,y */
 void OP_D1(C6507 *c);
 
 /* cmp zp,x */
 void OP_D5(C6507 *c);
 
+/* dec zp,x */
+void OP_D6(C6507 *c);
+
 /* cmp abs,y */
 void OP_D9(C6507 *c);
 
 /* cmp abs,x */
 void OP_DD(C6507 *c);
+
+/* dec abs,x */
+void OP_DE(C6507 *c);
 
 /* cpx im */
 void OP_E0(C6507 *c);
@@ -286,6 +307,12 @@ void OP_E4(C6507 *c);
 /* sbc zp */
 void OP_E5(C6507 *c);
 
+/* inc zp */
+void OP_E6(C6507 *c);
+
+/* inx im */
+void OP_E8(C6507 *c);
+
 /* sbc im */
 void OP_E9(C6507 *c);
 
@@ -295,17 +322,26 @@ void OP_EC(C6507 *c);
 /* sbc abs */
 void OP_ED(C6507 *c);
 
+/* inc abs */
+void OP_EE(C6507 *c);
+
 /* sbc in,y */
 void OP_F1(C6507 *c);
 
 /* sbc zp,x */
 void OP_F5(C6507 *c);
 
+/* inc zp,x */
+void OP_F6(C6507 *c);
+
 /* sbc abs,y */
 void OP_F9(C6507 *c);
 
 /* sbc abs,x */
 void OP_FD(C6507 *c);
+
+/* inc abs,x */
+void OP_FE(C6507 *c);
 
 /* get opcode by its value */
 op_ptr get_opcode(uint8_t op);
