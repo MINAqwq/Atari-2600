@@ -961,6 +961,18 @@ OP_BE(C6507 *c)
 }
 
 void
+OP_C0(C6507 *c)
+{
+	CYCLE_START
+
+	CYCLE_ADDRMODE_IM
+
+	CYCLE_ADD(2, inst_cpy(c); RESET_CYCLE)
+
+	CYCLE_END
+}
+
+void
 OP_C1(C6507 *c)
 {
 	CYCLE_START
@@ -968,6 +980,18 @@ OP_C1(C6507 *c)
 	CYCLE_ADDRMODE_INX
 
 	CYCLE_ADD(6, inst_cmp(c); RESET_CYCLE)
+
+	CYCLE_END
+}
+
+void
+OP_C4(C6507 *c)
+{
+	CYCLE_START
+
+	CYCLE_ADDRMODE_ZP
+
+	CYCLE_ADD(3, inst_cpy(c); RESET_CYCLE)
 
 	CYCLE_END
 }
@@ -992,6 +1016,18 @@ OP_C9(C6507 *c)
 	CYCLE_ADDRMODE_IM
 
 	CYCLE_ADD(2, inst_cmp(c); RESET_CYCLE)
+
+	CYCLE_END
+}
+
+void
+OP_CC(C6507 *c)
+{
+	CYCLE_START
+
+	CYCLE_ADDRMODE_ABS
+
+	CYCLE_ADD(4, inst_cpy(c); RESET_CYCLE)
 
 	CYCLE_END
 }
@@ -1057,6 +1093,18 @@ OP_DD(C6507 *c)
 }
 
 void
+OP_E0(C6507 *c)
+{
+	CYCLE_START
+
+	CYCLE_ADDRMODE_IM
+
+	CYCLE_ADD(2, inst_cpx(c); RESET_CYCLE)
+
+	CYCLE_END
+}
+
+void
 OP_E1(C6507 *c)
 {
 	CYCLE_START
@@ -1065,6 +1113,18 @@ OP_E1(C6507 *c)
 
 	CYCLE_ADD(6, c->regs.p.decimal_mode ? inst_sbc_bcd(c) : inst_sbc(c);
 		  RESET_CYCLE)
+
+	CYCLE_END
+}
+
+void
+OP_E4(C6507 *c)
+{
+	CYCLE_START
+
+	CYCLE_ADDRMODE_ZP
+
+	CYCLE_ADD(3, inst_cpx(c); RESET_CYCLE)
 
 	CYCLE_END
 }
@@ -1091,6 +1151,18 @@ OP_E9(C6507 *c)
 
 	CYCLE_ADD(2, c->regs.p.decimal_mode ? inst_sbc_bcd(c) : inst_sbc(c);
 		  RESET_CYCLE)
+
+	CYCLE_END
+}
+
+void
+OP_EC(C6507 *c)
+{
+	CYCLE_START
+
+	CYCLE_ADDRMODE_ABS
+
+	CYCLE_ADD(4, inst_cpx(c); RESET_CYCLE)
 
 	CYCLE_END
 }
@@ -1318,12 +1390,18 @@ get_opcode(uint8_t op)
 		return &OP_BD;
 	case 0xBE:
 		return &OP_BE;
+	case 0xC0:
+		return &OP_C0;
 	case 0xC1:
 		return &OP_C1;
+	case 0xC4:
+		return &OP_C4;
 	case 0xC5:
 		return &OP_C5;
 	case 0xC9:
 		return &OP_C9;
+	case 0xCC:
+		return &OP_CC;
 	case 0xCD:
 		return &OP_CD;
 	case 0xD1:
@@ -1334,12 +1412,18 @@ get_opcode(uint8_t op)
 		return &OP_D9;
 	case 0xDD:
 		return &OP_DD;
+	case 0xE0:
+		return &OP_E0;
 	case 0xE1:
 		return &OP_E1;
+	case 0xE4:
+		return &OP_E4;
 	case 0xE5:
 		return &OP_E5;
 	case 0xE9:
 		return &OP_E9;
+	case 0xEC:
+		return &OP_EC;
 	case 0xED:
 		return &OP_ED;
 	case 0xF1:

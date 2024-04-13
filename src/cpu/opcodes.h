@@ -241,14 +241,23 @@ void OP_BD(C6507 *c);
 /* ldx abs,y */
 void OP_BE(C6507 *c);
 
+/* cpy im */
+void OP_C0(C6507 *c);
+
 /* cmp in,x */
 void OP_C1(C6507 *c);
+
+/* cpy im */
+void OP_C4(C6507 *c);
 
 /* cmp zp */
 void OP_C5(C6507 *c);
 
 /* cmp im */
 void OP_C9(C6507 *c);
+
+/* cpy abs */
+void OP_CC(C6507 *c);
 
 /* cmp abs */
 void OP_CD(C6507 *c);
@@ -265,14 +274,23 @@ void OP_D9(C6507 *c);
 /* cmp abs,x */
 void OP_DD(C6507 *c);
 
+/* cpx im */
+void OP_E0(C6507 *c);
+
 /* sbc in,x */
 void OP_E1(C6507 *c);
+
+/* cpx zp */
+void OP_E4(C6507 *c);
 
 /* sbc zp */
 void OP_E5(C6507 *c);
 
 /* sbc im */
 void OP_E9(C6507 *c);
+
+/* cpx zp */
+void OP_EC(C6507 *c);
 
 /* sbc abs */
 void OP_ED(C6507 *c);
