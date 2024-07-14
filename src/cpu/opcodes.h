@@ -10,7 +10,7 @@ typedef void (*op_ptr)(C6507 *c);
 /* brk */
 void OP_00(C6507 *c);
 
-/* in,x */
+/* ora in,x */
 void OP_01(C6507 *c);
 
 /* ora zp */
@@ -31,17 +31,26 @@ void OP_0A(C6507 *c);
 /* ora abs */
 void OP_0D(C6507 *c);
 
-/* ora in,y*/
+/* asl abs */
+void OP_0E(C6507 *c);
+
+/* ora in,y */
 void OP_11(C6507 *c);
 
 /* ora zp,x */
 void OP_15(C6507 *c);
+
+/* asl zp,x */
+void OP_16(C6507 *c);
 
 /* ora abs,y */
 void OP_19(C6507 *c);
 
 /* ora abs,x */
 void OP_1D(C6507 *c);
+
+/* asl abs,x */
+void OP_1E(C6507 *c);
 
 /* and in,x */
 void OP_21(C6507 *c);
@@ -64,7 +73,7 @@ void OP_2C(C6507 *c);
 /* and abs */
 void OP_2D(C6507 *c);
 
-/* and iny */
+/* and in,y */
 void OP_31(C6507 *c);
 
 /* and zp,x */
@@ -142,7 +151,7 @@ void OP_85(C6507 *c);
 /* stx zp */
 void OP_86(C6507 *c);
 
-/* dey im */
+/* dey */
 void OP_88(C6507 *c);
 
 /* txa */
@@ -250,7 +259,7 @@ void OP_C0(C6507 *c);
 /* cmp in,x */
 void OP_C1(C6507 *c);
 
-/* cpy im */
+/* cpy zp */
 void OP_C4(C6507 *c);
 
 /* cmp zp */
@@ -259,13 +268,13 @@ void OP_C5(C6507 *c);
 /* dec zp */
 void OP_C6(C6507 *c);
 
-/* iny im */
+/* iny */
 void OP_C8(C6507 *c);
 
 /* cmp im */
 void OP_C9(C6507 *c);
 
-/* dex im */
+/* dex */
 void OP_CA(C6507 *c);
 
 /* cpy abs */
@@ -310,11 +319,14 @@ void OP_E5(C6507 *c);
 /* inc zp */
 void OP_E6(C6507 *c);
 
-/* inx im */
+/* inx */
 void OP_E8(C6507 *c);
 
 /* sbc im */
 void OP_E9(C6507 *c);
+
+/* nop */
+void OP_EA(C6507 *c);
 
 /* cpx zp */
 void OP_EC(C6507 *c);
