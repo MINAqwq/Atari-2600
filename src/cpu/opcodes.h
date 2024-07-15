@@ -91,14 +91,23 @@ void OP_41(C6507 *c);
 /* eor zp */
 void OP_45(C6507 *c);
 
+/* lsr zp */
+void OP_46(C6507 *c);
+
 /* pha */
 void OP_48(C6507 *c);
 
 /* eor im */
 void OP_49(C6507 *c);
 
+/* lsr A */
+void OP_4A(C6507 *c);
+
 /* eor abs */
 void OP_4D(C6507 *c);
+
+/* lsr abs */
+void OP_4E(C6507 *c);
 
 /* eor in,y */
 void OP_51(C6507 *c);
@@ -106,11 +115,17 @@ void OP_51(C6507 *c);
 /* eor zp,x */
 void OP_55(C6507 *c);
 
+/* lsr zp,x */
+void OP_56(C6507 *c);
+
 /* eor abs,y */
 void OP_59(C6507 *c);
 
 /* eor abs,x */
 void OP_5D(C6507 *c);
+
+/* lsr abx */
+void OP_5E(C6507 *c);
 
 /* adc in,x */
 void OP_61(C6507 *c);

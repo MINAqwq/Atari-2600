@@ -354,6 +354,21 @@ OP_45(C6507 *c)
 }
 
 void
+OP_46(C6507 *c)
+{
+
+	CYCLE_START
+
+	CYCLE_ADDRMODE_ZP
+
+	CYCLE_ADD(3, inst_lsr(c); NEXT_CYCLE)
+	CYCLE_ADD(4, NEXT_CYCLE)
+	CYCLE_ADD(5, bus_write(c->addr, c->value, c->bus); RESET_CYCLE)
+
+	CYCLE_END
+}
+
+void
 OP_48(C6507 *c)
 {
 	CYCLE_START
@@ -380,6 +395,17 @@ OP_49(C6507 *c)
 }
 
 void
+OP_4A(C6507 *c)
+{
+	CYCLE_START
+
+	CYCLE_ADD(1, NEXT_CYCLE)
+	CYCLE_ADD(2, ADDR_ACCUM(inst_lsr, c); RESET_CYCLE)
+
+	CYCLE_END
+}
+
+void
 OP_4D(C6507 *c)
 {
 	CYCLE_START
@@ -387,6 +413,20 @@ OP_4D(C6507 *c)
 	CYCLE_ADDRMODE_ABS
 
 	CYCLE_ADD(4, inst_eor(c); RESET_CYCLE)
+
+	CYCLE_END
+}
+
+void
+OP_4E(C6507 *c)
+{
+	CYCLE_START
+
+	CYCLE_ADDRMODE_ABS
+
+	CYCLE_ADD(4, inst_lsr(c); NEXT_CYCLE)
+	CYCLE_ADD(5, NEXT_CYCLE)
+	CYCLE_ADD(6, bus_write(c->addr, c->value, c->bus); RESET_CYCLE)
 
 	CYCLE_END
 }
@@ -416,6 +456,20 @@ OP_55(C6507 *c)
 }
 
 void
+OP_56(C6507 *c)
+{
+	CYCLE_START
+
+	CYCLE_ADDRMODE_ZPX
+
+	CYCLE_ADD(4, inst_lsr(c); NEXT_CYCLE)
+	CYCLE_ADD(5, NEXT_CYCLE)
+	CYCLE_ADD(6, bus_write(c->addr, c->value, c->bus); RESET_CYCLE)
+
+	CYCLE_END
+}
+
+void
 OP_59(C6507 *c)
 {
 	CYCLE_START
@@ -435,6 +489,20 @@ OP_5D(C6507 *c)
 	CYCLE_ADDRMODE_ABX(0)
 
 	CYCLE_ADD(4, inst_eor(c); RESET_CYCLE)
+
+	CYCLE_END
+}
+
+void
+OP_5E(C6507 *c)
+{
+	CYCLE_START
+
+	CYCLE_ADDRMODE_ABX(1)
+
+	CYCLE_ADD(4, inst_lsr(c); NEXT_CYCLE)
+	CYCLE_ADD(5, NEXT_CYCLE)
+	CYCLE_ADD(6, bus_write(c->addr, c->value, c->bus); RESET_CYCLE)
 
 	CYCLE_END
 }
@@ -1441,6 +1509,7 @@ OP_FE(C6507 *c)
 
 	CYCLE_END
 }
+
 op_ptr
 get_opcode(uint8_t op)
 {
@@ -1501,20 +1570,30 @@ get_opcode(uint8_t op)
 		return &OP_41;
 	case 0x45:
 		return &OP_45;
+	case 0x46:
+		return &OP_46;
 	case 0x48:
 		return &OP_48;
 	case 0x49:
 		return &OP_49;
+	case 0x4A:
+		return &OP_4A;
 	case 0x4D:
 		return &OP_4D;
+	case 0x4E:
+		return &OP_4E;
 	case 0x51:
 		return &OP_51;
 	case 0x55:
 		return &OP_55;
+	case 0x56:
+		return &OP_56;
 	case 0x59:
 		return &OP_59;
 	case 0x5D:
 		return &OP_5D;
+	case 0x5E:
+		return &OP_5E;
 	case 0x61:
 		return &OP_61;
 	case 0x65:
