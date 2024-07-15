@@ -473,6 +473,18 @@ OP_4A(C6507 *c)
 }
 
 void
+OP_4C(C6507 *c)
+{
+	CYCLE_START
+
+	CYCLE_ADDRMODE_ABS
+
+	CYCLE_ADD(3, inst_jmp(c); RESET_CYCLE)
+
+	CYCLE_END
+}
+
+void
 OP_4D(C6507 *c)
 {
 	CYCLE_START
@@ -650,6 +662,18 @@ OP_6A(C6507 *c)
 
 	CYCLE_ADD(1, ADDR_ACCUM(inst_ror, c); NEXT_CYCLE)
 	CYCLE_ADD(2, RESET_CYCLE)
+
+	CYCLE_END
+}
+
+void
+OP_6C(C6507 *c)
+{
+	CYCLE_START
+
+	CYCLE_ADDRMODE_IND
+
+	CYCLE_ADD(5, inst_jmp(c); RESET_CYCLE)
 
 	CYCLE_END
 }
@@ -845,7 +869,7 @@ OP_8C(C6507 *c)
 }
 
 void
-OD_8D(C6507 *c)
+OP_8D(C6507 *c)
 {
 	CYCLE_START
 
@@ -1722,6 +1746,8 @@ get_opcode(uint8_t op)
 		return &OP_49;
 	case 0x4A:
 		return &OP_4A;
+	case 0x4C:
+		return &OP_4C;
 	case 0x4D:
 		return &OP_4D;
 	case 0x4E:
@@ -1750,6 +1776,8 @@ get_opcode(uint8_t op)
 		return &OP_69;
 	case 0x6A:
 		return &OP_6A;
+	case 0x6C:
+		return &OP_6C;
 	case 0x6D:
 		return &OP_6D;
 	case 0x6E:
@@ -1780,6 +1808,8 @@ get_opcode(uint8_t op)
 		return &OP_8A;
 	case 0x8C:
 		return &OP_8C;
+	case 0x8D:
+		return &OP_8D;
 	case 0x8E:
 		return &OP_8E;
 	case 0x91:

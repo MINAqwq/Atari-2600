@@ -30,7 +30,7 @@ sh ./scripts/init.sh [compiler] Debug
 - Exits on BRK and dumps all registers
 
 #### Opcodes
-50.78% (including illegal opcodes)
+51.95% (including illegal opcodes)
 ```sh
 # prints out the text above
 python3 scripts/gen_opcodes.py -p

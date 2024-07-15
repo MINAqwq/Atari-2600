@@ -118,6 +118,9 @@ void OP_49(C6507 *c);
 /* lsr A */
 void OP_4A(C6507 *c);
 
+/* jmp abs */
+void OP_4C(C6507 *c);
+
 /* eor abs */
 void OP_4D(C6507 *c);
 
@@ -159,6 +162,9 @@ void OP_69(C6507 *c);
 
 /* ror a */
 void OP_6A(C6507 *c);
+
+/* jmp in */
+void OP_6C(C6507 *c);
 
 /* adc abs */
 void OP_6D(C6507 *c);
@@ -206,7 +212,7 @@ void OP_8A(C6507 *c);
 void OP_8C(C6507 *c);
 
 /* sta abs */
-void OD_8D(C6507 *c);
+void OP_8D(C6507 *c);
 
 /* stx abs */
 void OP_8E(C6507 *c);
