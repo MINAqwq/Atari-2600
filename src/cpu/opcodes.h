@@ -61,11 +61,17 @@ void OP_24(C6507 *c);
 /* and zp */
 void OP_25(C6507 *c);
 
+/* rol zp */
+void OP_26(C6507 *c);
+
 /* plp */
 void OP_28(C6507 *c);
 
 /* and im */
 void OP_29(C6507 *c);
+
+/* rol a */
+void OP_2A(C6507 *c);
 
 /* bit abs */
 void OP_2C(C6507 *c);
@@ -73,17 +79,26 @@ void OP_2C(C6507 *c);
 /* and abs */
 void OP_2D(C6507 *c);
 
+/* rol abs */
+void OP_2E(C6507 *c);
+
 /* and in,y */
 void OP_31(C6507 *c);
 
 /* and zp,x */
 void OP_35(C6507 *c);
 
+/* rol zp,x */
+void OP_36(C6507 *c);
+
 /* and abs,y */
 void OP_39(C6507 *c);
 
 /* and abs,x */
 void OP_3D(C6507 *c);
+
+/* rol abs,x*/
+void OP_3E(C6507 *c);
 
 /* eor in,x */
 void OP_41(C6507 *c);

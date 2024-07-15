@@ -230,6 +230,20 @@ OP_25(C6507 *c)
 }
 
 void
+OP_26(C6507 *c)
+{
+	CYCLE_START
+
+	CYCLE_ADDRMODE_ZP
+
+	CYCLE_ADD(3, inst_rol(c); NEXT_CYCLE)
+	CYCLE_ADD(4, NEXT_CYCLE)
+	CYCLE_ADD(5, bus_write(c->addr, c->value, c->bus); RESET_CYCLE)
+
+	CYCLE_END
+}
+
+void
 OP_28(C6507 *c)
 {
 	CYCLE_START
@@ -253,6 +267,17 @@ OP_29(C6507 *c)
 	CYCLE_ADDRMODE_IM
 
 	CYCLE_ADD(2, inst_and(c); RESET_CYCLE)
+
+	CYCLE_END
+}
+
+void
+OP_2A(C6507 *c)
+{
+	CYCLE_START
+
+	CYCLE_ADD(1, ADDR_ACCUM(inst_rol, c); NEXT_CYCLE)
+	CYCLE_ADD(2, RESET_CYCLE)
 
 	CYCLE_END
 }
@@ -282,6 +307,20 @@ OP_2D(C6507 *c)
 }
 
 void
+OP_2E(C6507 *c)
+{
+	CYCLE_START
+
+	CYCLE_ADDRMODE_ABS
+
+	CYCLE_ADD(4, inst_rol(c); NEXT_CYCLE)
+	CYCLE_ADD(5, NEXT_CYCLE)
+	CYCLE_ADD(6, bus_write(c->addr, c->value, c->bus); RESET_CYCLE)
+
+	CYCLE_END
+}
+
+void
 OP_31(C6507 *c)
 {
 	CYCLE_START
@@ -306,6 +345,20 @@ OP_35(C6507 *c)
 }
 
 void
+OP_36(C6507 *c)
+{
+	CYCLE_START
+
+	CYCLE_ADDRMODE_ZPX
+
+	CYCLE_ADD(4, inst_rol(c); NEXT_CYCLE)
+	CYCLE_ADD(5, NEXT_CYCLE)
+	CYCLE_ADD(6, bus_write(c->addr, c->value, c->bus); RESET_CYCLE)
+
+	CYCLE_END
+}
+
+void
 OP_39(C6507 *c)
 {
 	CYCLE_START
@@ -325,6 +378,20 @@ OP_3D(C6507 *c)
 	CYCLE_ADDRMODE_ABX(0)
 
 	CYCLE_ADD(4, inst_and(c); RESET_CYCLE)
+
+	CYCLE_END
+}
+
+void
+OP_3E(C6507 *c)
+{
+	CYCLE_START
+
+	CYCLE_ADDRMODE_ABX(1)
+
+	CYCLE_ADD(4, inst_rol(c); NEXT_CYCLE)
+	CYCLE_ADD(5, NEXT_CYCLE)
+	CYCLE_ADD(6, bus_write(c->addr, c->value, c->bus); RESET_CYCLE)
 
 	CYCLE_END
 }
@@ -1550,22 +1617,32 @@ get_opcode(uint8_t op)
 		return &OP_24;
 	case 0x25:
 		return &OP_25;
+	case 0x26:
+		return &OP_26;
 	case 0x28:
 		return &OP_28;
 	case 0x29:
 		return &OP_29;
+	case 0x2A:
+		return &OP_2A;
 	case 0x2C:
 		return &OP_2C;
 	case 0x2D:
 		return &OP_2D;
+	case 0x2E:
+		return &OP_2E;
 	case 0x31:
 		return &OP_31;
 	case 0x35:
 		return &OP_35;
+	case 0x36:
+		return &OP_36;
 	case 0x39:
 		return &OP_39;
 	case 0x3D:
 		return &OP_3D;
+	case 0x3E:
+		return &OP_3E;
 	case 0x41:
 		return &OP_41;
 	case 0x45:
