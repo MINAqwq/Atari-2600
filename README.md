@@ -4,11 +4,12 @@ This emulator tries to emulate the Atari 2600 as accurate as needed without havi
 ## User
 ### Release build
 ```sh
-# configure build as release build (use -G <buildsystem> to change the build system)
-cmake -S . -B ./build -DCMAKE_BUILD_TYPE=Release
+# configure build as release build)
+# if you don't know wich compiler u want to use just take use `cc`
+sh ./scripts/init.sh [compiler] Release
 
 # build the emulator (compiled binary is at ./build/atari2600)
-cmake --build ./build
+sh ./scripts/build.sh
 ```
 
 ### Run
@@ -19,7 +20,7 @@ You won't notice any of this, because a release build won't print debug stuff.
 ## Dev
 ### Debug build
 ```sh
-cmake -S . -B ./build -DDEBUG=ON
+sh ./scripts/init.sh [compiler] Debug
 ```
 
 ### Status
@@ -43,7 +44,8 @@ Opcodes im working on atm:
 - ROR
 
 ### Before a commit
-Update README.md (this file)
+- Test your opcodes
+- Update README.md (this file)
 
 ### Tricks
 - If implemented a new Opcode

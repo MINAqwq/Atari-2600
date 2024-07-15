@@ -6,7 +6,7 @@ set(CMAKE_C_STANDARD 90)
 set(CMAKE_C_STANDARD_REQUIRED ON)
 set(CMAKE_C_EXTENSIONS OFF)
 
-if (DEBUG)
+if (CMAKE_BUILD_TYPE STREQUAL "Debug")
     add_compile_definitions(ATARI_DEBUG)
 endif ()
 
