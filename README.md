@@ -30,7 +30,7 @@ sh ./scripts/init.sh [compiler] Debug
 - Exits on BRK and dumps all registers
 
 #### Opcodes
-48.83% (including illegal opcodes)
+50.78% (including illegal opcodes)
 ```sh
 # prints out the text above
 python3 scripts/gen_opcodes.py -p
@@ -39,9 +39,9 @@ python3 scripts/gen_opcodes.py -p
 ### What to do?
 While implementing all opcodes has highest priority i think making the memory map is also very important for the accuracy, but at the moment I'm not very sure how important ALL mirror locations are, so i will do the opcodes first.
 Opcodes im working on atm:
-- LSR
-- ROL
-- ROR
+- JMP
+- JSR
+- RTS
 
 ### Before a commit
 - Test your opcodes

@@ -148,14 +148,23 @@ void OP_61(C6507 *c);
 /* adc zp */
 void OP_65(C6507 *c);
 
+/* ror zp */
+void OP_66(C6507 *c);
+
 /* pla */
 void OP_68(C6507 *c);
 
 /* adc im */
 void OP_69(C6507 *c);
 
+/* ror a */
+void OP_6A(C6507 *c);
+
 /* adc abs */
 void OP_6D(C6507 *c);
+
+/* ror abs */
+void OP_6E(C6507 *c);
 
 /* adc in,y */
 void OP_71(C6507 *c);
@@ -163,11 +172,17 @@ void OP_71(C6507 *c);
 /* adc zp,x */
 void OP_75(C6507 *c);
 
+/* ror zp,x */
+void OP_76(C6507 *c);
+
 /* adc abs,y */
 void OP_79(C6507 *c);
 
 /* adc abs,x */
 void OP_7D(C6507 *c);
+
+/* ror abs,x */
+void OP_7E(C6507 *c);
 
 /* sta in,x */
 void OP_81(C6507 *c);
