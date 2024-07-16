@@ -8,10 +8,8 @@ addrmode_immediate(C6507 *c)
 {
 	CYCLE_START
 
-	CYCLE_ADD(1, {
-		c->value = bus_read(c->regs.pc, c->bus);
-		c->regs.pc++;
-	} NEXT_CYCLE)
+	CYCLE_ADD(1, c->value = bus_read(c->regs.pc, c->bus); c->regs.pc++;
+		  NEXT_CYCLE)
 
 	CYCLE_END
 }
