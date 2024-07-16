@@ -92,9 +92,6 @@ void inst_iny(C6507 *c);
 /* jump */
 void inst_jmp(C6507 *c);
 
-/* jump subroutine */
-void inst_jsr(C6507 *c);
-
 /* load accumulator */
 void inst_lda(C6507 *c);
 

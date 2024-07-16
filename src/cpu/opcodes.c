@@ -194,6 +194,21 @@ OP_1E(C6507 *c)
 }
 
 void
+OP_20(C6507 *c)
+{
+	CYCLE_START
+
+	CYCLE_ADDRMODE_ABS
+
+	/* jsr pushes the current pc - 1 to onto the stack before jumping */
+	CYCLE_ADD(4, c6507_push((--c->regs.pc) >> 8, c); NEXT_CYCLE)
+	CYCLE_ADD(5, c6507_push(c->regs.pc, c); NEXT_CYCLE)
+	CYCLE_ADD(6, inst_jmp(c); RESET_CYCLE)
+
+	CYCLE_END
+}
+
+void
 OP_21(C6507 *c)
 {
 	CYCLE_START
@@ -582,6 +597,21 @@ OP_5E(C6507 *c)
 	CYCLE_ADD(4, inst_lsr(c); NEXT_CYCLE)
 	CYCLE_ADD(5, NEXT_CYCLE)
 	CYCLE_ADD(6, bus_write(c->addr, c->value, c->bus); RESET_CYCLE)
+
+	CYCLE_END
+}
+
+void
+OP_60(C6507 *c)
+{
+	CYCLE_START
+
+	CYCLE_ADD(1, c->addr = c6507_pop(c); NEXT_CYCLE)
+	CYCLE_ADD(2, NEXT_CYCLE)
+	CYCLE_ADD(3, c->addr |= ((c6507_pop(c) << 8) & 0xFF00); NEXT_CYCLE)
+	CYCLE_ADD(4, NEXT_CYCLE)
+	CYCLE_ADD(5, c->addr++; NEXT_CYCLE)
+	CYCLE_ADD(6, inst_rts(c); RESET_CYCLE)
 
 	CYCLE_END
 }
@@ -1698,6 +1728,8 @@ get_opcode(uint8_t op)
 		return &OP_16;
 	case 0x19:
 		return &OP_19;
+	case 0x20:
+		return &OP_20;
 	case 0x1D:
 		return &OP_1D;
 	case 0x1E:
@@ -1764,6 +1796,8 @@ get_opcode(uint8_t op)
 		return &OP_5D;
 	case 0x5E:
 		return &OP_5E;
+	case 0x60:
+		return &OP_60;
 	case 0x61:
 		return &OP_61;
 	case 0x65:

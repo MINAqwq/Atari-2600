@@ -46,6 +46,9 @@ void OP_16(C6507 *c);
 /* ora abs,y */
 void OP_19(C6507 *c);
 
+/* jsr abs */
+void OP_20(C6507 *c);
+
 /* ora abs,x */
 void OP_1D(C6507 *c);
 
@@ -144,6 +147,9 @@ void OP_5D(C6507 *c);
 
 /* lsr abx */
 void OP_5E(C6507 *c);
+
+/* rts */
+void OP_60(C6507 *c);
 
 /* adc in,x */
 void OP_61(C6507 *c);

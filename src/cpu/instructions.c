@@ -310,20 +310,8 @@ inst_iny(C6507 *c)
 void
 inst_jmp(C6507 *c)
 {
-	c->regs.pc = c->value;
-}
-
-void
-inst_jsr(C6507 *c)
-{
-	c->regs.pc--;
-
-	/* push return addr */
-	c6507_push(c->regs.pc >> 8, c);
-	c6507_push(c->regs.pc, c);
-
-	/* jump to given addr */
-	c->regs.pc = c->value;
+	debug_log("JMP TO $%04X\n", c->addr);
+	c->regs.pc = c->addr;
 }
 
 void
@@ -497,7 +485,8 @@ inst_rti(C6507 *c)
 void
 inst_rts(C6507 *c)
 {
-	c->regs.pc = c->value;
+	debug_log("RETURN TO: %04X\n", c->addr);
+	c->regs.pc = c->addr;
 }
 
 void
