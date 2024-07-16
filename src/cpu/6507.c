@@ -74,11 +74,17 @@ c6507_exec(C6507 *c)
 void
 c6507_push(uint8_t val, C6507 *c)
 {
+	/* stack grows downwards */
+	c->regs.s--;
 	bus_write(c->regs.s + C6507_STACK_BASE, val, c->bus);
 }
 
 uint8_t
 c6507_pop(C6507 *c)
 {
-	return bus_read(c->regs.s + C6507_STACK_BASE, c->bus);
+	uint8_t val;
+
+	val = bus_read(c->regs.s + C6507_STACK_BASE, c->bus);
+	c->regs.s++;
+	return val;
 }

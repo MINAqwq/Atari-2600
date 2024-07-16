@@ -12,7 +12,7 @@
 #define NDBIT(x, n) size_t x : n
 #define TO_U8(x)    *(uint8_t *)&x
 
-#define SET_FLAG(condition, flag) flag = ((condition)&0x1);
+#define SET_FLAG(condition, flag) flag = ((condition) & 0x1);
 
 #define CYCLE_TIME 1.19
 
