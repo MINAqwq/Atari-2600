@@ -3,25 +3,21 @@
 #include "utils/debug.h"
 
 /* fake rom:
- * ; Load 0x0090 to address 0x80
- * LDA #0x90	; load 0x90 into A
- * STA $80	; store A (0x90) to address 0x80
- * LDA #00	; load 0x00 into A
- * STA $81	; store A (0x00) to address 0x01
+ * .org $1000
+ * JSR routine
+ * BRK
  *
- * ; Load 0xFE from address 0x92 after we stored it there
- * LDA #0xFE	; load 0xFE into A
- * LDY #02	; load 0x02 into Y
- * STA ($80),y	; read address 0x90 from addr 0x80 and add Y (0x02) to it
- * LDX $92	; read from address 0x92
- * PHA		; push A onto the stack
- * PLP		; pull whats on the stack an write it to P
- * EOR #0xF0	; Bitwise xor content in A with 0xF0 as mask
- * ORA #0xE0	; Bitwise or content in A with 0xE0 as mask
+ * routine:
+ * LDA #0xFF
+ * ADC #0x02
+ * LDA #0x02
+ * ADC #0x02
+ * RTS
+ * LDA #0x55
+ * BRK
  */
-static uint8_t rom[] = {0xA9, 0x90, 0x85, 0x80, 0xA9, 0x00, 0x85, 0x81,
-			0xA9, 0xFE, 0xA0, 0x02, 0x91, 0x80, 0xA6, 0x92,
-			0x48, 0x28, 0x49, 0xF0, 0x09, 0xE0, 0x00};
+static uint8_t rom[] = {0x20, 0x04, 0x10, 0x00, 0xA9, 0xFF, 0x69, 0x02,
+			0xA9, 0x02, 0x69, 0x02, 0x60, 0xA9, 0x55, 0x00};
 
 int
 main()
@@ -44,9 +40,9 @@ main()
 
 	/* Output after BRK should be
 	------ CPU Status ------
-	A:      EE
-	X:      FE
-	Y:      02
+	A:      05
+	X:      00
+	Y:      00
 	SP:     FC
 	CF:     0
 	ZF:     0
@@ -54,7 +50,7 @@ main()
 	DM:     1
 	VF:     1
 	NF:     1
-	PC:     1017
+	PC:     1004
 	*/
 
 	return 0;
