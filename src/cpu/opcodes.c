@@ -80,6 +80,12 @@ OP_09(C6507 *c)
 }
 
 void
+OP_10(C6507 *c)
+{
+	CYCLE_BRANCH(inst_bpl, c)
+}
+
+void
 OP_0A(C6507 *c)
 {
 	CYCLE_START
@@ -336,6 +342,12 @@ OP_2E(C6507 *c)
 }
 
 void
+OP_30(C6507 *c)
+{
+	CYCLE_BRANCH(inst_bmi, c)
+}
+
+void
 OP_31(C6507 *c)
 {
 	CYCLE_START
@@ -523,6 +535,12 @@ OP_4E(C6507 *c)
 	CYCLE_ADD(6, bus_write(c->addr, c->value, c->bus); RESET_CYCLE)
 
 	CYCLE_END
+}
+
+void
+OP_50(C6507 *c)
+{
+	CYCLE_BRANCH(inst_bvc, c)
 }
 
 void
@@ -736,6 +754,12 @@ OP_6E(C6507 *c)
 }
 
 void
+OP_70(C6507 *c)
+{
+	CYCLE_BRANCH(inst_bvs, c)
+}
+
+void
 OP_71(C6507 *c)
 {
 	CYCLE_START
@@ -920,6 +944,12 @@ OP_8E(C6507 *c)
 	CYCLE_ADD(4, inst_stx(c); RESET_CYCLE)
 
 	CYCLE_END
+}
+
+void
+OP_90(C6507 *c)
+{
+	CYCLE_BRANCH(inst_bcc, c)
 }
 
 void
@@ -1160,6 +1190,12 @@ OP_AE(C6507 *c)
 	CYCLE_ADD(4, inst_ldx(c); RESET_CYCLE)
 
 	CYCLE_END
+}
+
+void
+OP_B0(C6507 *c)
+{
+	CYCLE_BRANCH(inst_bcs, c)
 }
 
 void
@@ -1405,6 +1441,12 @@ OP_CE(C6507 *c)
 }
 
 void
+OP_D0(C6507 *c)
+{
+	CYCLE_BRANCH(inst_bne, c)
+}
+
+void
 OP_D1(C6507 *c)
 {
 	CYCLE_START
@@ -1619,6 +1661,12 @@ OP_EE(C6507 *c)
 }
 
 void
+OP_F0(C6507 *c)
+{
+	CYCLE_BRANCH(inst_beq, c)
+}
+
+void
 OP_F1(C6507 *c)
 {
 	CYCLE_START
@@ -1720,6 +1768,8 @@ get_opcode(uint8_t op)
 		return &OP_0D;
 	case 0x0E:
 		return &OP_0E;
+	case 0x10:
+		return &OP_10;
 	case 0x11:
 		return &OP_11;
 	case 0x15:
@@ -1754,6 +1804,8 @@ get_opcode(uint8_t op)
 		return &OP_2D;
 	case 0x2E:
 		return &OP_2E;
+	case 0x30:
+		return &OP_30;
 	case 0x31:
 		return &OP_31;
 	case 0x35:
@@ -1784,6 +1836,8 @@ get_opcode(uint8_t op)
 		return &OP_4D;
 	case 0x4E:
 		return &OP_4E;
+	case 0x50:
+		return &OP_50;
 	case 0x51:
 		return &OP_51;
 	case 0x55:
@@ -1816,6 +1870,8 @@ get_opcode(uint8_t op)
 		return &OP_6D;
 	case 0x6E:
 		return &OP_6E;
+	case 0x70:
+		return &OP_70;
 	case 0x71:
 		return &OP_71;
 	case 0x75:
@@ -1846,6 +1902,8 @@ get_opcode(uint8_t op)
 		return &OP_8D;
 	case 0x8E:
 		return &OP_8E;
+	case 0x90:
+		return &OP_90;
 	case 0x91:
 		return &OP_91;
 	case 0x94:
@@ -1886,6 +1944,8 @@ get_opcode(uint8_t op)
 		return &OP_AD;
 	case 0xAE:
 		return &OP_AE;
+	case 0xB0:
+		return &OP_B0;
 	case 0xB1:
 		return &OP_B1;
 	case 0xB4:
@@ -1926,6 +1986,8 @@ get_opcode(uint8_t op)
 		return &OP_CD;
 	case 0xCE:
 		return &OP_CE;
+	case 0xD0:
+		return &OP_D0;
 	case 0xD1:
 		return &OP_D1;
 	case 0xD5:
@@ -1960,6 +2022,8 @@ get_opcode(uint8_t op)
 		return &OP_ED;
 	case 0xEE:
 		return &OP_EE;
+	case 0xF0:
+		return &OP_F0;
 	case 0xF1:
 		return &OP_F1;
 	case 0xF5:

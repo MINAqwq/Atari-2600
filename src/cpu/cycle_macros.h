@@ -1,7 +1,7 @@
 #ifndef ATARI_CPU_CYCLE_MACROS_H
 #define ATARI_CPU_CYCLE_MACROS_H
 
-#include "6507.h"
+#include "../utils/memory_page.h"
 
 #define CYCLE_START switch (c->cycle_count) {
 
@@ -69,5 +69,32 @@
 	default:                                                               \
 		addrmode_indirect_y(c, force_oops);                            \
 		break;
+
+#define CYCLE_BRANCH(inst, c)                                                  \
+	CYCLE_START                                                            \
+                                                                               \
+	CYCLE_ADDRMODE_IM                                                      \
+                                                                               \
+	CYCLE_ADD(2, {                                                         \
+		uint16_t pc;                                                   \
+                                                                               \
+		pc = c->regs.pc;                                               \
+		inst(c);                                                       \
+		if (pc == c->regs.pc) {                                        \
+			RESET_CYCLE                                            \
+			return;                                                \
+		}                                                              \
+                                                                               \
+		if (page(pc) != page(c->regs.pc)) {                            \
+			NEXT_CYCLE                                             \
+			return;                                                \
+		}                                                              \
+                                                                               \
+		GOTO_CYCLE(4);                                                 \
+	})                                                                     \
+	CYCLE_ADD(3, NEXT_CYCLE)                                               \
+	CYCLE_ADD(4, RESET_CYCLE)                                              \
+                                                                               \
+	CYCLE_END
 
 #endif

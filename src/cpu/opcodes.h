@@ -34,6 +34,9 @@ void OP_0D(C6507 *c);
 /* asl abs */
 void OP_0E(C6507 *c);
 
+/* bpl */
+void OP_10(C6507 *c);
+
 /* ora in,y */
 void OP_11(C6507 *c);
 
@@ -85,6 +88,9 @@ void OP_2D(C6507 *c);
 /* rol abs */
 void OP_2E(C6507 *c);
 
+/* bmi */
+void OP_30(C6507 *c);
+
 /* and in,y */
 void OP_31(C6507 *c);
 
@@ -129,6 +135,9 @@ void OP_4D(C6507 *c);
 
 /* lsr abs */
 void OP_4E(C6507 *c);
+
+/* bvc */
+void OP_50(C6507 *c);
 
 /* eor in,y */
 void OP_51(C6507 *c);
@@ -178,6 +187,9 @@ void OP_6D(C6507 *c);
 /* ror abs */
 void OP_6E(C6507 *c);
 
+/* bvs */
+void OP_70(C6507 *c);
+
 /* adc in,y */
 void OP_71(C6507 *c);
 
@@ -222,6 +234,9 @@ void OP_8D(C6507 *c);
 
 /* stx abs */
 void OP_8E(C6507 *c);
+
+/* bcc */
+void OP_90(C6507 *c);
 
 /* sta in,y */
 void OP_91(C6507 *c);
@@ -283,6 +298,9 @@ void OP_AD(C6507 *c);
 /* ldx abs */
 void OP_AE(C6507 *c);
 
+/* bcs */
+void OP_B0(C6507 *c);
+
 /* lda in,y */
 void OP_B1(C6507 *c);
 
@@ -343,6 +361,9 @@ void OP_CD(C6507 *c);
 /* dec abs */
 void OP_CE(C6507 *c);
 
+/* bne */
+void OP_D0(C6507 *c);
+
 /* cmp in,y */
 void OP_D1(C6507 *c);
 
@@ -393,6 +414,9 @@ void OP_ED(C6507 *c);
 
 /* inc abs */
 void OP_EE(C6507 *c);
+
+/* beq */
+void OP_F0(C6507 *c);
 
 /* sbc in,y */
 void OP_F1(C6507 *c);
