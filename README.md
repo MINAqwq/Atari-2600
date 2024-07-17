@@ -58,7 +58,7 @@ python3 scripts/gen_opcodes.py -p
 Legal opcodes are finished soon and the memory mirroring is also working. Next to do is emulating the TIA to
 control the CPU and draw on a window.
 The current dummy tia memory gets indexed by a number and i would like to keep it like this.
-So we need to make the object structure right or implement a `tia_writ(uint8_t register, uint8_t byte)` function or something like that.
+So we need to make the object structure right or implement a `tia_write(uint8_t register, uint8_t byte)` function or something like that.
 
 Opcodes im working on atm:
 - CLC
