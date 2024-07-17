@@ -2,13 +2,14 @@
 #include "cpu/6507.h"
 
 #include <stdio.h>
+#include <stdlib.h>
 
 int8_t
 load_rom(char *path, Bus *bus)
 {
 	FILE *fp;
 
-	fp= fopen(path, "rb");
+	fp = fopen(path, "rb");
 	if (!fp) {
 		return 1;
 	}
@@ -22,7 +23,7 @@ load_rom(char *path, Bus *bus)
 int
 main(int argc, char **argv)
 {
-	Bus   bus;
+	Bus  *bus;
 	C6507 cpu;
 
 	if (argc != 2) {
@@ -30,9 +31,14 @@ main(int argc, char **argv)
 		return 1;
 	}
 
-	load_rom(argv[1], &bus);
+	bus = malloc(sizeof(*bus));
 
-	c6507_init(&bus, &cpu);
+	if (load_rom(argv[1], bus)) {
+		free(bus);
+		return 1;
+	}
+
+	c6507_init(bus, &cpu);
 
 	cpu.regs.a = 0x00;
 	cpu.regs.pc = 0x1000;
@@ -56,6 +62,8 @@ main(int argc, char **argv)
 	NF:     1
 	PC:     1004
 	*/
+
+	free(bus);
 
 	return 0;
 }

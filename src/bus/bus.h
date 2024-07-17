@@ -3,15 +3,13 @@
 
 #include <stdint.h>
 
-static const uint16_t MAX_ADDR = (1 << 13);
-
 /* Data Bus */
 typedef struct {
-	uint8_t memory[0xFFFF];
+	uint8_t dummy_riot[0x20];
+	uint8_t dummy_tia[0x40];
+	uint8_t ram[0x80];
+	uint8_t rom[0x1000];
 } Bus;
-
-/* connect the rom to the bus */
-void bus_connect_rom(uint8_t *rom, Bus *b);
 
 /* write val to addr */
 void bus_write(uint16_t addr, uint8_t val, Bus *b);
