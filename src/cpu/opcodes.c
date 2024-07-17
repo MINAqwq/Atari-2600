@@ -162,6 +162,17 @@ OP_16(C6507 *c)
 }
 
 void
+OP_18(C6507 *c)
+{
+	CYCLE_START
+
+	CYCLE_ADD(1, inst_clc(c); NEXT_CYCLE)
+	CYCLE_ADD(2, RESET_CYCLE)
+
+	CYCLE_END
+}
+
+void
 OP_19(C6507 *c)
 {
 	CYCLE_START
@@ -386,6 +397,17 @@ OP_36(C6507 *c)
 }
 
 void
+OP_38(C6507 *c)
+{
+	CYCLE_START
+
+	CYCLE_ADD(1, inst_sec(c); NEXT_CYCLE)
+	CYCLE_ADD(2, RESET_CYCLE)
+
+	CYCLE_END
+}
+
+void
 OP_39(C6507 *c)
 {
 	CYCLE_START
@@ -577,6 +599,17 @@ OP_56(C6507 *c)
 	CYCLE_ADD(4, inst_lsr(c); NEXT_CYCLE)
 	CYCLE_ADD(5, NEXT_CYCLE)
 	CYCLE_ADD(6, bus_write(c->addr, c->value, c->bus); RESET_CYCLE)
+
+	CYCLE_END
+}
+
+void
+OP_58(C6507 *c)
+{
+	CYCLE_START
+
+	CYCLE_ADD(1, inst_cli(c); NEXT_CYCLE)
+	CYCLE_ADD(2, RESET_CYCLE)
 
 	CYCLE_END
 }
@@ -795,6 +828,17 @@ OP_76(C6507 *c)
 	CYCLE_ADD(4, inst_ror(c); NEXT_CYCLE)
 	CYCLE_ADD(5, NEXT_CYCLE)
 	CYCLE_ADD(6, bus_write(c->addr, c->value, c->bus); RESET_CYCLE)
+
+	CYCLE_END
+}
+
+void
+OP_78(C6507 *c)
+{
+	CYCLE_START
+
+	CYCLE_ADD(1, inst_sei(c); NEXT_CYCLE)
+	CYCLE_ADD(2, RESET_CYCLE)
 
 	CYCLE_END
 }
@@ -1247,6 +1291,17 @@ OP_B6(C6507 *c)
 }
 
 void
+OP_B8(C6507 *c)
+{
+	CYCLE_START
+
+	CYCLE_ADD(1, inst_clv(c); NEXT_CYCLE)
+	CYCLE_ADD(2, RESET_CYCLE)
+
+	CYCLE_END
+}
+
+void
 OP_B9(C6507 *c)
 {
 	CYCLE_START
@@ -1485,6 +1540,17 @@ OP_D6(C6507 *c)
 }
 
 void
+OP_D8(C6507 *c)
+{
+	CYCLE_START
+
+	CYCLE_ADD(1, inst_cld(c); NEXT_CYCLE)
+	CYCLE_ADD(2, RESET_CYCLE)
+
+	CYCLE_END
+}
+
+void
 OP_D9(C6507 *c)
 {
 	CYCLE_START
@@ -1707,6 +1773,17 @@ OP_F6(C6507 *c)
 }
 
 void
+OP_F8(C6507 *c)
+{
+	CYCLE_START
+
+	CYCLE_ADD(1, inst_sed(c); NEXT_CYCLE)
+	CYCLE_ADD(2, RESET_CYCLE)
+
+	CYCLE_END
+}
+
+void
 OP_F9(C6507 *c)
 {
 	CYCLE_START
@@ -1776,6 +1853,8 @@ get_opcode(uint8_t op)
 		return &OP_15;
 	case 0x16:
 		return &OP_16;
+	case 0x18:
+		return &OP_18;
 	case 0x19:
 		return &OP_19;
 	case 0x20:
@@ -1812,6 +1891,8 @@ get_opcode(uint8_t op)
 		return &OP_35;
 	case 0x36:
 		return &OP_36;
+	case 0x38:
+		return &OP_38;
 	case 0x39:
 		return &OP_39;
 	case 0x3D:
@@ -1844,6 +1925,8 @@ get_opcode(uint8_t op)
 		return &OP_55;
 	case 0x56:
 		return &OP_56;
+	case 0x58:
+		return &OP_58;
 	case 0x59:
 		return &OP_59;
 	case 0x5D:
@@ -1878,6 +1961,8 @@ get_opcode(uint8_t op)
 		return &OP_75;
 	case 0x76:
 		return &OP_76;
+	case 0x78:
+		return &OP_78;
 	case 0x79:
 		return &OP_79;
 	case 0x7D:
@@ -1954,6 +2039,8 @@ get_opcode(uint8_t op)
 		return &OP_B5;
 	case 0xB6:
 		return &OP_B6;
+	case 0xB8:
+		return &OP_B8;
 	case 0xB9:
 		return &OP_B9;
 	case 0xBA:
@@ -1994,6 +2081,8 @@ get_opcode(uint8_t op)
 		return &OP_D5;
 	case 0xD6:
 		return &OP_D6;
+	case 0xD8:
+		return &OP_D8;
 	case 0xD9:
 		return &OP_D9;
 	case 0xDD:
@@ -2030,6 +2119,8 @@ get_opcode(uint8_t op)
 		return &OP_F5;
 	case 0xF6:
 		return &OP_F6;
+	case 0xF8:
+		return &OP_F8;
 	case 0xF9:
 		return &OP_F9;
 	case 0xFD:

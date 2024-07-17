@@ -46,6 +46,9 @@ void OP_15(C6507 *c);
 /* asl zp,x */
 void OP_16(C6507 *c);
 
+/* clc */
+void OP_18(C6507 *c);
+
 /* ora abs,y */
 void OP_19(C6507 *c);
 
@@ -100,6 +103,9 @@ void OP_35(C6507 *c);
 /* rol zp,x */
 void OP_36(C6507 *c);
 
+/* sec */
+void OP_38(C6507 *c);
+
 /* and abs,y */
 void OP_39(C6507 *c);
 
@@ -147,6 +153,9 @@ void OP_55(C6507 *c);
 
 /* lsr zp,x */
 void OP_56(C6507 *c);
+
+/* cli */
+void OP_58(C6507 *c);
 
 /* eor abs,y */
 void OP_59(C6507 *c);
@@ -198,6 +207,9 @@ void OP_75(C6507 *c);
 
 /* ror zp,x */
 void OP_76(C6507 *c);
+
+/* sei */
+void OP_78(C6507 *c);
 
 /* adc abs,y */
 void OP_79(C6507 *c);
@@ -313,6 +325,9 @@ void OP_B5(C6507 *c);
 /* ldx zp,y */
 void OP_B6(C6507 *c);
 
+/* clv */
+void OP_B8(C6507 *c);
+
 /* lda abs,y */
 void OP_B9(C6507 *c);
 
@@ -373,6 +388,9 @@ void OP_D5(C6507 *c);
 /* dec zp,x */
 void OP_D6(C6507 *c);
 
+/* cld */
+void OP_D8(C6507 *c);
+
 /* cmp abs,y */
 void OP_D9(C6507 *c);
 
@@ -426,6 +444,9 @@ void OP_F5(C6507 *c);
 
 /* inc zp,x */
 void OP_F6(C6507 *c);
+
+/* sed */
+void OP_F8(C6507 *c);
 
 /* sbc abs,y */
 void OP_F9(C6507 *c);

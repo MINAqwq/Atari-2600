@@ -46,7 +46,7 @@ sh ./scripts/init.sh [compiler] Debug
 
 #### Opcodes
 
-55.86% (including illegal opcodes)
+58.59% (including illegal opcodes)
 ```sh
 # prints out the text above
 python3 scripts/gen_opcodes.py -p
@@ -61,14 +61,7 @@ The current dummy tia memory gets indexed by a number and i would like to keep i
 So we need to make the object structure right or implement a `tia_write(uint8_t register, uint8_t byte)` function or something like that.
 
 Opcodes im working on atm:
-- CLC
-- CLD
-- CLI
-- CLV
-- SEC
-- SED
-- SEI
-
+- RTI
 
 ### Before a commit
 - Test your opcodes
