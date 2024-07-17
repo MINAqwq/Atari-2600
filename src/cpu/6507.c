@@ -49,7 +49,7 @@ c6507_clock(C6507 *c)
 	}
 
 	/* execute instruction */
-	debug_log("Execute #%d from $%02X", c->cycle_count, c->regs.ir);
+	/* debug_log("Execute #%d from $%02X", c->cycle_count, c->regs.ir); */
 	op(c);
 }
 

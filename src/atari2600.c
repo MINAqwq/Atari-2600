@@ -1,38 +1,42 @@
 #include "bus/bus.h"
 #include "cpu/6507.h"
-#include "utils/debug.h"
 
-/* fake rom:
- * .org $1000
- * JSR routine
- * BRK
- *
- * routine:
- * LDA #0xFF
- * ADC #0x02
- * LDA #0x02
- * ADC #0x02
- * RTS
- * LDA #0x55
- * BRK
- */
-static uint8_t rom[] = {0x20, 0x04, 0x10, 0x00, 0xA9, 0xFF, 0x69, 0x02,
-			0xA9, 0x02, 0x69, 0x02, 0x60, 0xA9, 0x55, 0x00};
+#include <stdio.h>
+
+int8_t
+load_rom(char *path, Bus *bus)
+{
+	FILE *fp;
+
+	fp= fopen(path, "rb");
+	if (!fp) {
+		return 1;
+	}
+
+	fread(bus->rom, 1, 0x1000, fp);
+
+	fclose(fp);
+	return 0;
+}
 
 int
-main()
+main(int argc, char **argv)
 {
 	Bus   bus;
 	C6507 cpu;
+
+	if (argc != 2) {
+		fprintf(stderr, "%s [ROM.a26]\n", argv[0]);
+		return 1;
+	}
+
+	load_rom(argv[1], &bus);
 
 	c6507_init(&bus, &cpu);
 
 	cpu.regs.a = 0x00;
 	cpu.regs.pc = 0x1000;
 	cpu.cycle_count = 0;
-
-	/* load fake rom */
-	memcpy(bus.memory + 0x1000, rom, sizeof(rom));
 
 	while (1) {
 		c6507_exec(&cpu);
